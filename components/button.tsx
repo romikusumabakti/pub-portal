@@ -5,8 +5,8 @@ interface VariantStyle {
 
 interface Prop {
   children: any;
-  className: string;
-  variant: string;
+  className?: string;
+  variant?: string;
   size: string;
 }
 
