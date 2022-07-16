@@ -14,14 +14,14 @@ const CandidateCard = ({ candidate }: any) => {
 
   const { theme, systemTheme } = useTheme();
   const materialtheme = themeFromSourceColor(argbFromHex(candidate.color));
-  const cardRef = useRef();
+  const cardRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let dark = false;
     if (theme === "system") {
       dark = systemTheme === "dark";
     } else if (theme === "dark") {
       dark = true;
-    } 
+    }
     applyTheme(materialtheme, {
       target: cardRef.current,
       dark: dark,
@@ -47,7 +47,9 @@ const CandidateCard = ({ candidate }: any) => {
         ></Image>
       </div>
       <div className="flex flex-col flex-1 gap-4">
-        <div className="flex items-center flex-1 text-xl font-bold display">{candidate.name}</div>
+        <div className="flex items-center flex-1 text-xl font-bold display">
+          {candidate.name}
+        </div>
         <div className="flex flex-wrap justify-between gap-4 md:mt-auto">
           <Button size="small">{t("more")}</Button>
           <Button variant="tonal" size="small">
