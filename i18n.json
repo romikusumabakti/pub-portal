@@ -1,0 +1,8 @@
+{
+  "locales": ["id", "en", "ar", "su", "jv", "min", "ms", "btk"],
+  "defaultLocale": "id",
+  "pages": {
+    "*": ["common"],
+    "rgx:^/election(/.*)?$": ["election"]
+  }
+}
