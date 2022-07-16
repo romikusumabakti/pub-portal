@@ -93,7 +93,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
   const { data: session, status } = useSession();
 
   const { theme, systemTheme, setTheme } = useTheme();
-  
+
   return (
     <header className="z-30 flex justify-between h-16 px-6 py-2 bg-surface1">
       <div className="flex gap-2">
@@ -146,7 +146,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
             </option>
           ))}
         </select>
-        {status === "authenticated" ? (
+        {/* {status === "authenticated" ? (
           <Image
             src={session.user?.image}
             alt={session.user?.name}
@@ -157,7 +157,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
           />
         ) : (
           <Button onClick={() => signIn("google")}>Login</Button>
-        )}
+        )} */}
       </div>
     </header>
   );
