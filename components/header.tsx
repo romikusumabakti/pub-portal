@@ -14,6 +14,7 @@ import {
 import { GiGalaxy } from "react-icons/gi";
 import {
   MdDarkMode,
+  MdLanguage,
   MdLightMode,
   MdMenu,
   MdSettingsBrightness,
@@ -86,6 +87,23 @@ interface Props {
   handleOpenDrawer: MouseEventHandler;
 }
 
+import { Menu, Transition } from "@headlessui/react";
+
+function MenuItem({ ...rest }: any) {
+  return (
+    <Menu.Item>
+      {({ active }) => (
+        <button
+          className={`px-4 py-2 text-sm text-left first:rounded-t-2xl last:rounded-b-2xl ${
+            active && "bg-on-surface bg-opacity-10"
+          }`}
+          {...rest}
+        />
+      )}
+    </Menu.Item>
+  );
+}
+
 const Header = ({ handleOpenDrawer }: Props) => {
   const [appsButton, setAppsButton] = useState();
   const router = useRouter();
@@ -134,18 +152,35 @@ const Header = ({ handleOpenDrawer }: Props) => {
             <MdDarkMode className="w-6 h-6" />
           )}
         </IconButton>
-        <select
-          value={locale}
-          onChange={(e) =>
-            router.push({ pathname, query }, asPath, { locale: e.target.value })
-          }
-        >
-          {languages.map((language) => (
-            <option key={language.locale} value={language.locale}>
-              {language.name}
-            </option>
-          ))}
-        </select>
+        <Menu as="div" className="relative">
+          <Menu.Button className="flex items-center justify-center w-10 h-10 text-2xl rounded-full hover:bg-on-surface hover:bg-opacity-10">
+            <MdLanguage />
+          </Menu.Button>
+          {/* <div className="fixed inset-0 bg-black/30" aria-hidden="true" /> */}
+          <Transition
+            enter="transition duration-100 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-75 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <Menu.Items className="absolute right-0 flex flex-col w-48 mt-2 origin-top-right rounded-2xl bg-surface1">
+              {languages.map((language) => (
+                <MenuItem
+                  key={language.locale}
+                  onClick={() =>
+                    router.push({ pathname, query }, asPath, {
+                      locale: language.locale,
+                    })
+                  }
+                >
+                  {language.name}
+                </MenuItem>
+              ))}
+            </Menu.Items>
+          </Transition>
+        </Menu>
         {/* {status === "authenticated" ? (
           <Image
             src={session.user?.image}
