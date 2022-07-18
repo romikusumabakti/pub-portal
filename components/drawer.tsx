@@ -37,9 +37,10 @@ const Drawer = ({ open, handleOpen, path, buttons }: Props) => {
         {buttons.map((button) => (
           <Link key={button.path} href={`/${path}${button.path}`} shallow>
             <button
-              className={`px-6 font-medium h-14 rounded-r-full flex gap-3 items-center hover:bg-on-surface hover:bg-opacity-10 ${
-                `/${path}${button.path}` === pathname &&
-                "bg-secondary-container text-on-secondary-container"
+              className={`px-6 font-medium h-14 rounded-r-full flex gap-3 items-center ${
+                `/${path}${button.path}` === pathname
+                  ? "bg-secondary-container text-on-secondary-container"
+                  : "hover:bg-on-surface hover:bg-opacity-5"
               }`}
             >
               <span className="text-2xl">{button.icon}</span>

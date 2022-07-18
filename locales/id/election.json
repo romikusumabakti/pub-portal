@@ -1,9 +1,11 @@
 {
-  "title": "<1>Pemilu</1> <0>PUB</0>",
+  "title": "Pemilu PUB",
+  "logo": "<1>Pemilu</1> <0>PUB</0>",
   "schedule": "Jadwal",
   "candidate": "Kandidat",
   "voter": "Pemilih",
   "simulation": "Simulasi",
   "statistic": "Statistik",
-  "result": "Hasil"
+  "result": "Hasil",
+  "try-simulation": "Coba simulasi"
 }

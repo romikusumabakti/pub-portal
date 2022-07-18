@@ -94,7 +94,7 @@ function MenuItem({ ...rest }: any) {
       {({ active }) => (
         <button
           className={`px-4 h-12 text-sm text-left first:rounded-t last:rounded-b ${
-            active && "bg-on-surface bg-opacity-10"
+            active && "bg-on-surface bg-opacity-5"
           }`}
           {...rest}
         />
@@ -112,7 +112,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
   const { theme, systemTheme, setTheme } = useTheme();
 
   return (
-    <header className="z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-surface1">
+    <header className="z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-surface1 text-on-surface">
       <div className="flex gap-2">
         <IconButton onClick={handleOpenDrawer} large className="lg:hidden">
           <MdMenu />
@@ -127,10 +127,10 @@ const Header = ({ handleOpenDrawer }: Props) => {
             />
             <span className="text-xl display">
               <Trans
-                i18nKey="election:title"
+                i18nKey="election:logo"
                 components={[
-                  <span key={0} className="font-bold text-blue-500" />,
-                  <span key={1} className="text-zinc-700 dark:text-zinc-400" />,
+                  <span key={0} className="font-bold text-primary" />,
+                  <span key={1} />,
                 ]}
               />
             </span>
