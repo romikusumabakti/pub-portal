@@ -10,7 +10,7 @@ interface Prop {
   className?: string;
   variant?: string;
   size?: string;
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
 }
 
 const Button = ({
