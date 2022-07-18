@@ -31,10 +31,10 @@ const CandidateCard = ({ candidate }: any) => {
   return (
     <div
       ref={cardRef}
-      className="flex flex-1 gap-8 px-8 py-6 md:gap-4 md:flex-col rounded-3xl bg-surface1 text-primary"
+      className="flex flex-1 gap-4 p-4 md:px-8 md:py-6 md:gap-4 md:flex-col rounded-3xl bg-surface1 text-primary"
     >
-      <div className="relative w-1/3 md:w-full">
-        <div className="absolute z-10 flex items-center justify-center w-1/4 font-bold rounded-full md:text-2xl h-1/4 display bg-primary text-on-primary">
+      <div className="relative self-start w-1/4 md:w-full">
+        <div className="absolute z-10 flex items-center justify-center w-1/4 text-xs font-bold rounded-full md:text-2xl h-1/4 display bg-primary text-on-primary">
           0{candidate.number}
         </div>
         <Image

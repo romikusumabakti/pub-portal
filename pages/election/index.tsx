@@ -10,7 +10,7 @@ import {
   MdPeople,
 } from "react-icons/md";
 import CandidateCard from "../../components/election/candidate-card";
-import Layout from "../../components/layout";
+import Layout from "../../components/election/layout";
 import Footer from "../../components/footer";
 import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
@@ -41,20 +41,24 @@ const candidates = [
     name: "Fadli Fathurrahman",
     color: "#4caf50",
   },
+  // {
+  //   number: 4,
+  //   name: "Sawaluddin Siregar",
+  //   color: "#2196f3",
+  // },
 ];
 
 const Page: NextPageWithLayout = () => {
   const { t, lang } = useTranslation("common");
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{t("election:title")}</title>
         <meta name="description" content="Pemilihan ketua PUB" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      </Head> */}
       <Layout menu={menu}>
-        <div className="flex flex-col gap-6 md:flex-row">
+        <div className="flex flex-col gap-4 md:gap-6 md:flex-row">
           {candidates.map((candidate) => (
             <CandidateCard key={candidate.number} candidate={candidate} />
           ))}
@@ -66,7 +70,8 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  console.log("Layout berfungsi");
+  return <Layout menu={menu}>{page}</Layout>;
 };
 
 export default Page;
