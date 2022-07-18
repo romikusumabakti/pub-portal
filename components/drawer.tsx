@@ -30,14 +30,14 @@ const Drawer = ({ open, handleOpen, path, buttons }: Props) => {
         onClick={handleOpen}
       />
       <aside
-        className={`bg-surface1 fixed z-20 left-0 flex flex-col ease-in-out duration-200 w-64 h-full py-2 pr-2 ${
+        className={`bg-surface1 fixed z-20 left-0 flex flex-col ease-in-out duration-200 w-80 h-full pr-4 ${
           !open && "-translate-x-full"
         } lg:static lg:translate-x-0`}
       >
         {buttons.map((button) => (
           <Link key={button.path} href={`/${path}${button.path}`} shallow>
             <button
-              className={`px-6 h-10 rounded-r-full flex gap-4 items-center hover:bg-on-surface hover:bg-opacity-10 ${
+              className={`px-6 font-medium h-14 rounded-r-full flex gap-4 items-center hover:bg-on-surface hover:bg-opacity-10 ${
                 `/${path}${button.path}` === pathname &&
                 "bg-secondary-container text-on-secondary-container"
               }`}

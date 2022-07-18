@@ -19,8 +19,7 @@ import {
   MdMenu,
   MdSettingsBrightness,
 } from "react-icons/md";
-import { NextPage } from "next";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import Trans from "next-translate/Trans";
 import { useRouter } from "next/router";
 import IconButton from "./icon-button";
@@ -94,7 +93,7 @@ function MenuItem({ ...rest }: any) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`px-4 py-2 text-sm text-left first:rounded-t-2xl last:rounded-b-2xl ${
+          className={`px-4 h-12 text-sm text-left first:rounded-t last:rounded-b ${
             active && "bg-on-surface bg-opacity-10"
           }`}
           {...rest}
@@ -113,7 +112,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
   const { theme, systemTheme, setTheme } = useTheme();
 
   return (
-    <header className="z-30 flex justify-between h-16 px-6 py-2 bg-surface1">
+    <header className="z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-surface1">
       <div className="flex gap-2">
         <IconButton onClick={handleOpenDrawer} large className="lg:hidden">
           <MdMenu />
@@ -165,7 +164,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Menu.Items className="absolute right-0 flex flex-col w-48 mt-2 origin-top-right rounded-2xl bg-surface1">
+            <Menu.Items className="absolute right-0 flex flex-col w-48 mt-2 origin-top-right rounded bg-surface1">
               {languages.map((language) => (
                 <MenuItem
                   key={language.locale}
@@ -181,7 +180,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
             </Menu.Items>
           </Transition>
         </Menu>
-        {/* {status === "authenticated" ? (
+        {status === "authenticated" ? (
           <Image
             src={session.user?.image}
             alt={session.user?.name}
@@ -192,7 +191,7 @@ const Header = ({ handleOpenDrawer }: Props) => {
           />
         ) : (
           <Button onClick={() => signIn("google")}>Login</Button>
-        )} */}
+        )}
       </div>
     </header>
   );

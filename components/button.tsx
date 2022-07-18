@@ -10,7 +10,7 @@ interface Prop {
   size: string;
 }
 
-const Button = ({ children, className, variant, size }: Prop) => {
+const Button = ({ children, className, variant, size, ...rest }: Prop) => {
   const variants: Record<string, VariantStyle> = {
     filled: {
       button: "bg-primary text-on-primary",
@@ -33,6 +33,7 @@ const Button = ({ children, className, variant, size }: Prop) => {
       className={`group rounded-full font-medium relative ${
         variants[variant || "filled"].button
       } ${sizes[size || "medium"]} ${className}`}
+      {...rest}
     >
       <div
         className={`absolute top-0 left-0 w-full h-full rounded-full opacity-0 ${
