@@ -2,6 +2,7 @@ import CandidateCard from "../../components/election/candidate-card";
 import Layout from "../../components/election/layout";
 import { NextPage } from "next";
 import { candidates } from ".";
+import MaterialThemed from "../../components/material-themed";
 
 const Home: NextPage = () => {
   return (

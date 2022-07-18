@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Button from "../../components/button";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
+import MaterialThemed from "../../components/material-themed";
 
 export const candidates = [
   {
@@ -52,19 +53,21 @@ const Home: NextPage = () => {
         <h1 className="text-3xl">3 kandidat dari S1 Teknik Informatika</h1>
         <div className="flex gap-4">
           {candidates.map((candidate) => (
-            <div key={candidate.number} className="relative">
-              <div className="absolute z-10 flex items-center justify-center w-1/4 font-bold rounded-full h-1/4 display bg-primary text-on-primary">
-                0{candidate.number}
+            <MaterialThemed key={candidate.number} color={candidate.color}>
+              <div className="relative">
+                <div className="absolute z-10 flex items-center justify-center w-1/4 font-bold rounded-full h-1/4 display bg-primary text-on-primary">
+                  0{candidate.number}
+                </div>
+                <Image
+                  src={`/images/election-candidates/${candidate.number}.png`}
+                  alt={candidate.name}
+                  // layout="responsive"
+                  width={128}
+                  height={128}
+                  className={"z-0 rounded-full bg-secondary-container"}
+                ></Image>
               </div>
-              <Image
-                src={`/images/election-candidates/${candidate.number}.png`}
-                alt={candidate.name}
-                // layout="responsive"
-                width={128}
-                height={128}
-                className={"z-0 rounded-full bg-secondary-container"}
-              ></Image>
-            </div>
+            </MaterialThemed>
           ))}
         </div>
         <p>
