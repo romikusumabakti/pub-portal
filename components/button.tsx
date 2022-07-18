@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 interface VariantStyle {
   button: string;
   stateLayer: string;
@@ -7,10 +9,17 @@ interface Prop {
   children: any;
   className?: string;
   variant?: string;
-  size: string;
+  size?: string;
+  onClick: MouseEventHandler;
 }
 
-const Button = ({ children, className, variant, size, ...rest }: Prop) => {
+const Button = ({
+  children,
+  className,
+  variant = "filled",
+  size = "medium",
+  onClick,
+}: Prop) => {
   const variants: Record<string, VariantStyle> = {
     filled: {
       button: "bg-primary text-on-primary",
@@ -30,15 +39,11 @@ const Button = ({ children, className, variant, size, ...rest }: Prop) => {
 
   return (
     <button
-      className={`group rounded-full font-medium relative ${
-        variants[variant || "filled"].button
-      } ${sizes[size || "medium"]} ${className}`}
-      {...rest}
+      className={`group rounded-full font-medium relative ${variants[variant].button} ${sizes[size]} ${className}`}
+      onClick={onClick}
     >
       <div
-        className={`absolute top-0 left-0 w-full h-full rounded-full opacity-0 ${
-          variants[variant || "filled"].stateLayer
-        } group-hover:opacity-hover group-focus:opacity-focus`}
+        className={`absolute top-0 left-0 w-full h-full rounded-full opacity-0 ${variants[variant].stateLayer} group-hover:opacity-hover group-focus:opacity-focus`}
       ></div>
       {children}
     </button>

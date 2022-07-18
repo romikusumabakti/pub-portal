@@ -182,8 +182,8 @@ const Header = ({ handleOpenDrawer }: Props) => {
         </Menu>
         {status === "authenticated" ? (
           <Image
-            src={session.user?.image}
-            alt={session.user?.name}
+            src={session.user?.image!}
+            alt={session.user?.name!}
             width={32}
             height={32}
             layout="fixed"
