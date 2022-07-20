@@ -4,22 +4,22 @@ import Link from "next/link";
 import {
   FaBlog,
   FaBook,
-  FaChrome,
-  FaHome,
   FaInfoCircle,
   FaUsers,
-  FaVoteYea,
   FaWaveSquare,
 } from "react-icons/fa";
 import { GiGalaxy } from "react-icons/gi";
+import { IoLogoElectron } from "react-icons/io5";
 import {
   MdDarkMode,
+  MdHome,
+  MdHowToVote,
   MdLanguage,
   MdLightMode,
   MdMenu,
   MdSettingsBrightness,
 } from "react-icons/md";
-import { MouseEventHandler, useState } from "react";
+import { Fragment, MouseEventHandler, useState } from "react";
 import Trans from "next-translate/Trans";
 import { useRouter } from "next/router";
 import IconButton from "./icon-button";
@@ -29,87 +29,69 @@ import Button from "./button";
 const apps = [
   {
     name: "home",
-    icon: <FaHome />,
+    icon: MdHome,
     title: "Beranda",
     description: "Kembali ke beranda",
   },
   {
     name: "activity",
-    icon: <FaWaveSquare />,
+    icon: FaWaveSquare,
     title: "Aktivitas",
   },
   {
-    name: "learn",
-    icon: <FaBook />,
-    title: "Belajar",
+    name: "books",
+    icon: FaBook,
+    title: "Buku",
   },
   {
     name: "forum",
-    icon: <FaUsers />,
+    icon: FaUsers,
     title: "Forum",
   },
   {
     name: "blog",
-    icon: <FaBlog />,
+    icon: FaBlog,
     title: "Blog",
   },
   {
     name: "wiki",
-    icon: <FaInfoCircle />,
+    icon: FaInfoCircle,
     title: "Wiki",
   },
   {
     name: "election",
-    icon: <FaVoteYea />,
+    icon: MdHowToVote,
     title: "Pemilu",
   },
   {
+    name: "borland-x",
+    icon: IoLogoElectron,
+    title: "Borland X",
+    description: "Project IDE C/C++",
+  },
+  {
     name: "universe",
-    icon: <GiGalaxy />,
+    icon: GiGalaxy,
     title: "Universe",
     description: "Jelajahi dunia baru",
   },
 ];
 
-const languages = [
-  { locale: "id", name: "Bahasa Indonesia" },
-  { locale: "en", name: "English" },
-  { locale: "ar", name: "العربية" },
-  { locale: "su", name: "Basa Sunda" },
-  { locale: "jv", name: "Basa Jawa" },
-  { locale: "min", name: "Baso Minangkabau" },
-  { locale: "ms", name: "Bahasa Melayu" },
-  { locale: "btk", name: "Hata Batak" },
-];
-
 interface Props {
   handleOpenDrawer: MouseEventHandler;
+  path: string;
+  icon: ({}: any) => JSX.Element;
 }
 
-import { Menu, Transition } from "@headlessui/react";
+import Popover from "./popover";
+import QuickSettings from "./quick-settings";
 
-function MenuItem({ ...rest }: any) {
-  return (
-    <Menu.Item>
-      {({ active }) => (
-        <button
-          className={`px-4 h-12 text-sm text-left first:rounded-t last:rounded-b ${
-            active && "bg-on-surface bg-opacity-5"
-          }`}
-          {...rest}
-        />
-      )}
-    </Menu.Item>
-  );
-}
-
-const Header = ({ handleOpenDrawer }: Props) => {
-  const [appsButton, setAppsButton] = useState();
-  const router = useRouter();
-  const { pathname, asPath, query, locale } = router;
+const Header = ({ handleOpenDrawer, path = "common", icon }: Props) => {
   const { data: session, status } = useSession();
 
-  const { theme, systemTheme, setTheme } = useTheme();
+  const { theme } = useTheme();
+
+  const AppIcon = icon;
 
   return (
     <header className="z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-surface1 text-on-surface">
@@ -117,17 +99,12 @@ const Header = ({ handleOpenDrawer }: Props) => {
         <IconButton onClick={handleOpenDrawer} large className="lg:hidden">
           <MdMenu />
         </IconButton>
-        <Link href="/">
+        <Link href={`/${path}`}>
           <a className="flex items-center gap-2">
-            <Image
-              src="/images/icon.svg"
-              alt="PUB Portal icon"
-              width={32}
-              height={32}
-            />
+            <AppIcon className="w-8" />
             <span className="text-xl display">
               <Trans
-                i18nKey="election:logo"
+                i18nKey={`${path}:logo`}
                 components={[
                   <span key={0} className="font-bold text-primary" />,
                   <span key={1} />,
@@ -142,53 +119,42 @@ const Header = ({ handleOpenDrawer }: Props) => {
         className="h-10 px-4 bg-black rounded-full outline-none dark:bg-white bg-opacity-10 dark:bg-opacity-10 grow placeholder:text-gray-500"
       /> */}
       <div className="flex items-center gap-4">
-        <IconButton
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" || (!theme && systemTheme === "dark") ? (
-            <MdLightMode className="w-6 h-6" />
-          ) : (
-            <MdDarkMode className="w-6 h-6" />
-          )}
-        </IconButton>
-        <Menu as="div" className="relative">
-          <Menu.Button className="flex items-center justify-center w-10 h-10 text-2xl rounded-full hover:bg-on-surface hover:bg-opacity-10">
-            <MdLanguage />
-          </Menu.Button>
-          {/* <div className="fixed inset-0 bg-black/30" aria-hidden="true" /> */}
-          <Transition
-            enter="transition duration-100 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <Menu.Items className="absolute right-0 flex flex-col w-48 mt-2 origin-top-right rounded bg-surface1">
-              {languages.map((language) => (
-                <MenuItem
-                  key={language.locale}
-                  onClick={() =>
-                    router.push({ pathname, query }, asPath, {
-                      locale: language.locale,
-                    })
-                  }
+        <QuickSettings />
+        <Popover>
+          <Popover.Button as={IconButton}>
+            <Image
+              src={`/images/pub-portal-animated-${theme}.svg`}
+              alt="PUB Portal icon"
+              width={32}
+              height={32}
+            />
+          </Popover.Button>
+          <Popover.Panel className="grid grid-cols-3 gap-2 p-4 w-max bg-surface1 rounded-3xl">
+            {apps.map((app) => {
+              const Icon = app.icon;
+              return (
+                <a
+                  key={app.name}
+                  className="flex flex-col items-center justify-center flex-1 w-20 h-20 gap-2 cursor-pointer hover:bg-on-surface hover:bg-opacity-5 rounded-2xl"
                 >
-                  {language.name}
-                </MenuItem>
-              ))}
-            </Menu.Items>
-          </Transition>
-        </Menu>
+                  <Icon className="text-2xl" />
+                  <div className="text-sm">{app.title}</div>
+                </a>
+              );
+            })}
+          </Popover.Panel>
+        </Popover>
         {status === "authenticated" ? (
-          <Image
-            src={session.user?.image!}
-            alt={session.user?.name!}
-            width={32}
-            height={32}
-            layout="fixed"
-            className="w-6 h-6 rounded-full"
-          />
+          <IconButton>
+            <Image
+              src={session.user?.image!}
+              alt={session.user?.name!}
+              width={32}
+              height={32}
+              layout="fixed"
+              className="w-6 h-6 rounded-full"
+            />
+          </IconButton>
         ) : (
           <Button onClick={() => signIn("google")}>Login</Button>
         )}

@@ -299,19 +299,19 @@ README adalah item pertama yang dilihat pengunjung saat mengunjungi repository k
 
 Klik tombol ikon plus (+) di kanan atas, lalu pilih New repository.
 
-![](gambar/20220611185710.png)
+![](img/20220611185710.png)
 
 Masukkan nama repository, sebaiknya sama dengan nama repository lokal yang akan kita hubungkan. Misalnya `latihan-1`.
 
-![](gambar/20220611185542.png)
+![](img/20220611185542.png)
 
 Field yang lain biarkan saja. Kalau sudah, klik tombol Create repository.
 
-![](gambar/20220611190019.png)
+![](img/20220611190019.png)
 
 Maka seharusnya akan muncul tampilan seperti berikut.
 
-![](gambar/20220611190220.png)
+![](img/20220611190220.png)
 
 Kita berhasil membuat repository kosong. Sekarang saatnya menghubungkannya dengan repository lokal yang ada di komputer kita.
 

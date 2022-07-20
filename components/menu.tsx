@@ -1,34 +1,46 @@
-import { Menu } from "@headlessui/react";
+import { Menu as HUIMenu, Transition } from "@headlessui/react";
+import { Component } from "react";
+import Backdrop from "./backdrop";
+import MenuTransition from "./menu-transition";
 
-function MyDropdown() {
-  return (
-    <Menu>
-      <Menu.Button>More</Menu.Button>
-      <Menu.Items>
-        <Menu.Item>
-          {({ active }) => (
-            <a
-              className={`${active && "bg-blue-500"}`}
-              href="/account-settings"
-            >
-              Account settings
-            </a>
-          )}
-        </Menu.Item>
-        <Menu.Item>
-          {({ active }) => (
-            <a
-              className={`${active && "bg-blue-500"}`}
-              href="/account-settings"
-            >
-              Documentation
-            </a>
-          )}
-        </Menu.Item>
-        <Menu.Item disabled>
-          <span className="opacity-75">Invite a friend (coming soon!)</span>
-        </Menu.Item>
-      </Menu.Items>
-    </Menu>
-  );
+class Menu extends Component {
+  static Button = ({ ...props }) => {
+    return <HUIMenu.Button {...props} />;
+  };
+
+  static Items = ({ ...props }) => {
+    return (
+      <Transition>
+        <Backdrop />
+        <MenuTransition>
+          <HUIMenu.Items
+            as="div"
+            className="absolute right-0 z-10 flex flex-col w-48 origin-top-right rounded bg-surface1"
+            {...props}
+          />
+        </MenuTransition>
+      </Transition>
+    );
+  };
+
+  static Item = ({ ...props }) => {
+    return (
+      <HUIMenu.Item>
+        {({ active }) => (
+          <button
+            className={`px-4 h-12 text-sm text-left first:rounded-t last:rounded-b ${
+              active && "bg-on-surface bg-opacity-5"
+            }`}
+            {...props}
+          />
+        )}
+      </HUIMenu.Item>
+    );
+  };
+
+  render() {
+    return <HUIMenu as="div" className="relative z-10" {...this.props} />;
+  }
 }
+
+export default Menu;

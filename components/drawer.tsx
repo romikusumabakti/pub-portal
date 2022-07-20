@@ -16,7 +16,7 @@ interface Props {
   buttons: Page[];
 }
 
-const Drawer = ({ open, handleOpen, path, buttons }: Props) => {
+const Drawer = ({ open, handleOpen, path, buttons = [] }: Props) => {
   const { pathname } = useRouter();
   const { t } = useTranslation("common");
 
@@ -32,10 +32,10 @@ const Drawer = ({ open, handleOpen, path, buttons }: Props) => {
       <aside
         className={`bg-surface1 fixed z-20 left-0 flex flex-col ease-in-out duration-200 w-80 md:w-64 h-full pr-4 ${
           !open && "-translate-x-full"
-        } lg:static lg:translate-x-0`}
+        } md:static md:translate-x-0`}
       >
         {buttons.map((button) => (
-          <Link key={button.path} href={`/${path}${button.path}`} shallow>
+          <Link key={button.path} href={`/${path}${button.path}`}>
             <button
               className={`px-6 font-medium h-14 rounded-r-full flex gap-3 items-center ${
                 `/${path}${button.path}` === pathname

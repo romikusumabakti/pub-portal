@@ -3,12 +3,23 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 192 192" style="enable-background:new 0 0 192 192;" xml:space="preserve">
 <style type="text/css">
-	.blue{fill:#4285F4;}
-	.purple{fill:#966494;}
-	.red{fill:#EA4335;}
-	.yellow{fill:#EA8600;}
-	.green{fill:#34A853;}
-	.teal{fill:#3B96A3;}
+	.blue{fill:#acc7ff;}
+	.purple{fill:#fbacf8;}
+	.red{fill:#ffb4a8;}
+	.yellow{fill:#ffb772;}
+	.green{fill:#6cdd81;}
+	.teal{fill:#4fd8eb;}
+
+	#portal {
+		transform-origin: center;
+		animation: rotate 1s linear infinite reverse;
+	}
+
+	@keyframes rotate {
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 </style>
 <g>
 	<path class="blue" d="M55,87.5l34.79,18.98c2.48,1.36,5.45,1.36,7.92,0l33.18-18.12v24.39c0,2.27,1.86,4.13,4.13,4.13
