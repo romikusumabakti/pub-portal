@@ -2,6 +2,7 @@ import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Key, MouseEventHandler } from "react";
+import QuickSettings from "./quick-settings";
 
 interface Page {
   title: string;
@@ -48,6 +49,7 @@ const Drawer = ({ open, handleOpen, path, buttons = [] }: Props) => {
             </button>
           </Link>
         ))}
+        <QuickSettings className="self-end md:hidden" />
       </aside>
     </>
   );
