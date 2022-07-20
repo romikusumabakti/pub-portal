@@ -1,27 +1,12 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaBlog,
-  FaBook,
-  FaInfoCircle,
-  FaUsers,
-  FaWaveSquare,
-} from "react-icons/fa";
+import { FaBlog, FaInfoCircle, FaUsers, FaWaveSquare } from "react-icons/fa";
 import { GiGalaxy } from "react-icons/gi";
 import { IoLogoElectron } from "react-icons/io5";
-import {
-  MdDarkMode,
-  MdHome,
-  MdHowToVote,
-  MdLanguage,
-  MdLightMode,
-  MdMenu,
-  MdSettingsBrightness,
-} from "react-icons/md";
-import { Fragment, MouseEventHandler, useState } from "react";
+import { MdBook, MdHome, MdHowToVote, MdMenu } from "react-icons/md";
+import { MouseEventHandler } from "react";
 import Trans from "next-translate/Trans";
-import { useRouter } from "next/router";
 import IconButton from "./icon-button";
 import { signIn, useSession } from "next-auth/react";
 import Button from "./button";
@@ -40,7 +25,7 @@ const apps = [
   },
   {
     name: "books",
-    icon: FaBook,
+    icon: MdBook,
     title: "Buku",
   },
   {
