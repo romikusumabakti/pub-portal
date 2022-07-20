@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MdBook } from "react-icons/md";
 import Drawer from "../drawer";
 import Header from "../header";
 
@@ -9,6 +10,7 @@ const Layout = ({ children, menu }: any) => {
       <Header
         handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
         path="books"
+        icon={MdBook}
       />
       <div className="flex flex-1 min-h-0">
         <Drawer
