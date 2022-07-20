@@ -14,7 +14,8 @@ const CandidateCard = ({ candidate }: any) => {
             0{candidate.number}
           </div>
           <Image
-            src={`/images/election-candidates/${candidate.number}.png`}
+            // src={`/images/election-candidates/${candidate.number}.png`}
+            src="/images/pica.png"
             alt={candidate.name}
             // layout="responsive"
             width={256}
