@@ -13,6 +13,7 @@ import { useState } from "react";
 import Drawer from "../drawer";
 import Footer from "../footer";
 import Header from "../header";
+import ElectionIcon from "../icons/election-icon";
 
 export const menu = [
   { title: "home", path: "", icon: <MdHome /> },
@@ -33,9 +34,13 @@ const Layout = ({ children }: any) => {
       <Head>
         <title>{t("election:title")}</title>
         <meta name="description" content="Pemilihan ketua PUB" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon/election.ico" />
       </Head>
-      <Header handleOpenDrawer={() => setOpenDrawer((prev) => !prev)} />
+      <Header
+        handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
+        path="election"
+        icon={ElectionIcon}
+      />
       <div className="flex flex-1 min-h-0">
         <Drawer
           open={openDrawer}
