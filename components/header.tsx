@@ -104,7 +104,7 @@ const Header = ({ handleOpenDrawer, path = "common", icon }: Props) => {
         className="h-10 px-4 bg-black rounded-full outline-none dark:bg-white bg-opacity-10 dark:bg-opacity-10 grow placeholder:text-gray-500"
       /> */}
       <div className="flex items-center gap-4">
-        <QuickSettings />
+        <QuickSettings className="hidden md:flex" />
         <Popover>
           <Popover.Button as={IconButton}>
             <Image
@@ -114,19 +114,36 @@ const Header = ({ handleOpenDrawer, path = "common", icon }: Props) => {
               height={32}
             />
           </Popover.Button>
-          <Popover.Panel className="grid grid-cols-3 gap-2 p-4 w-max bg-surface1 rounded-3xl">
-            {apps.map((app) => {
-              const Icon = app.icon;
-              return (
-                <a
-                  key={app.name}
-                  className="flex flex-col items-center justify-center flex-1 w-20 h-20 gap-2 cursor-pointer hover:bg-on-surface hover:bg-opacity-5 rounded-2xl"
-                >
-                  <Icon className="text-2xl" />
-                  <div className="text-sm">{app.title}</div>
-                </a>
-              );
-            })}
+          <Popover.Panel className="flex flex-col p-4 bg-surface1 rounded-3xl">
+            <div className="flex items-center justify-center gap-2 p-4">
+              <Image
+                src={`/images/pub-portal-animated-${theme}.svg`}
+                alt="PUB Portal icon"
+                width={32}
+                height={32}
+              />
+              <div className="text-xl">
+                <span className="font-bold text-primary">PUB</span>{" "}
+                <span>Portal</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2 w-max">
+              {apps.map((app) => {
+                const Icon = app.icon;
+                return (
+                  <a
+                    key={app.name}
+                    className={`flex flex-col items-center justify-center flex-1 w-20 h-20 gap-2 cursor-pointer hover:bg-on-surface hover:bg-opacity-5 rounded-2xl ${
+                      path.includes(app.name) &&
+                      "bg-secondary-container text-on-secondary-container"
+                    }`}
+                  >
+                    <Icon className="text-2xl" />
+                    <div className="text-sm">{app.title}</div>
+                  </a>
+                );
+              })}
+            </div>
           </Popover.Panel>
         </Popover>
         {status === "authenticated" ? (

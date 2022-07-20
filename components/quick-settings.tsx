@@ -15,13 +15,15 @@ const languages = [
   { locale: "btk", name: "Hata Batak" },
 ];
 
-const QuickSettings = () => {
+const QuickSettings = ({ className }: any) => {
   const router = useRouter();
-  const { pathname, asPath, query, locale } = router;
+  const { pathname, asPath, query } = router;
   const { theme, systemTheme, setTheme } = useTheme();
 
   return (
-    <div className="hidden rounded-full md:flex bg-secondary-container border-on-surface">
+    <div
+      className={`flex rounded-full bg-secondary-container border-on-surface ${className}`}
+    >
       <IconButton onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
         {theme === "dark" || (!theme && systemTheme === "dark") ? (
           <MdLightMode className="w-6 h-6" />
