@@ -114,8 +114,8 @@ const Header = ({ handleOpenDrawer, path = "common", icon }: Props) => {
               height={32}
             />
           </Popover.Button>
-          <Popover.Panel className="flex flex-col p-4 bg-surface1 rounded-3xl">
-            <div className="flex items-center justify-center gap-2 p-4">
+          <Popover.Panel className="flex flex-col gap-2 p-4 bg-surface1 rounded-3xl">
+            <div className="flex items-center justify-center gap-2 p-2">
               <Image
                 src={`/images/pub-portal-animated-${theme}.svg`}
                 alt="PUB Portal icon"
