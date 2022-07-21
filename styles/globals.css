@@ -121,5 +121,5 @@ aside {
 body > div {
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  @apply bg-surface lg:bg-surface1;
 }

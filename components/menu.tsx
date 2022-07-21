@@ -15,7 +15,7 @@ class Menu extends Component {
         <MenuTransition>
           <HUIMenu.Items
             as="div"
-            className="absolute top-0 right-0 z-10 flex flex-col w-48 origin-top-right rounded md:top-auto bg-surface1"
+            className="absolute top-0 right-0 flex flex-col w-48 origin-top-right rounded md:top-auto bg-surface1"
             {...props}
           />
         </MenuTransition>
@@ -39,7 +39,7 @@ class Menu extends Component {
   };
 
   render() {
-    return <HUIMenu as="div" className="z-10 md:relative" {...this.props} />;
+    return <HUIMenu as="div" className="z-20 md:relative" {...this.props} />;
   }
 }
 

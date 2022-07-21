@@ -14,7 +14,7 @@ class Popover extends Component {
         <Backdrop />
         <MenuTransition>
           <HUIPopover.Panel
-            className={`absolute origin-top-right top-1/2 right-1/2 md:top-auto translate-x-1/2 -translate-y-1/2 md:transform-none md:right-0 z-10 ${className}`}
+            className={`absolute origin-top-right top-1/2 right-1/2 md:top-auto translate-x-1/2 -translate-y-1/2 md:transform-none md:right-0 ${className}`}
             {...props}
           />
         </MenuTransition>
@@ -23,7 +23,7 @@ class Popover extends Component {
   };
 
   render() {
-    return <HUIPopover className="md:relative" {...this.props} />;
+    return <HUIPopover className="z-20 md:relative" {...this.props} />;
   }
 }
 

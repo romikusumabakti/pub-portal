@@ -1,7 +1,7 @@
 import useTranslation from "next-translate/useTranslation";
 
 const Footer = () => {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   return (
     <footer>
