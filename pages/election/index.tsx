@@ -6,40 +6,20 @@ import Image from "next/image";
 import MaterialThemed from "../../components/material-themed";
 
 export const candidates = [
-  // {
-  //   number: 1,
-  //   name: "Anggi Permana",
-  //   color: "#f44336",
-  // },
-  // {
-  //   number: 2,
-  //   name: "Azriel Pazarudin",
-  //   color: "#ffc107",
-  // },
-  // {
-  //   number: 3,
-  //   name: "Fadli Fathurrahman",
-  //   color: "#4caf50",
-  // },
-  // {
-  //   number: 4,
-  //   name: "Sawaluddin Siregar",
-  //   color: "#2196f3",
-  // },
   {
     number: 1,
-    name: "???? ????",
+    name: "Anggi Permana",
     color: "#f44336",
   },
   {
     number: 2,
-    name: "???? ????",
+    name: "Fadli Fathurrahman",
     color: "#ffc107",
   },
   {
     number: 3,
-    name: "???? ????",
-    color: "#4caf50",
+    name: "Sawaluddin Siregar",
+    color: "#2196f3",
   },
 ];
 
