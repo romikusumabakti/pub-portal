@@ -21,7 +21,7 @@ export const menu = [
   { title: "election:candidates", path: "/candidates", icon: <MdAccountBox /> },
   { title: "election:voters", path: "/voters", icon: <MdPeople /> },
   { title: "election:simulation", path: "/simulation", icon: <MdHowToVote /> },
-  { title: "election:statistic", path: "/statistic", icon: <MdBarChart /> },
+  { title: "election:statistics", path: "/statistics", icon: <MdBarChart /> },
   { title: "election:result", path: "/result", icon: <MdDataUsage /> },
 ];
 

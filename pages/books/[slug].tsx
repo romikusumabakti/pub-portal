@@ -38,7 +38,7 @@ export default function Post({
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout title="common:home" menu={posts}>
+    <Layout title="home" menu={posts}>
       {router.isFallback ? (
         <h1>Loading…</h1>
       ) : (

@@ -2,10 +2,10 @@
   "title": "PUB Election",
   "logo": "<0>PUB</0> <1>Election</1>",
   "schedule": "Schedule",
-  "candidates": "Candidate",
+  "candidates": "Candidates",
   "voters": "Voters",
   "simulation": "Simulation",
-  "statistic": "Statistic",
+  "statistics": "Statistics",
   "result": "Result",
   "try-simulation": "Try simulation"
 }
