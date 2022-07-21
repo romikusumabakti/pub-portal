@@ -1,12 +1,18 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import Link from "next/link";
-import { FaBlog, FaInfoCircle, FaUsers, FaWaveSquare } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import { GiGalaxy } from "react-icons/gi";
 import { IoLogoElectron } from "react-icons/io5";
-import { MdBook, MdHome, MdHowToVote, MdMenu } from "react-icons/md";
+import {
+  MdArticle,
+  MdBook,
+  MdHome,
+  MdHowToVote,
+  MdLegendToggle,
+  MdMenu,
+  MdRssFeed,
+} from "react-icons/md";
 import { MouseEventHandler } from "react";
-import Trans from "next-translate/Trans";
 import IconButton from "./icon-button";
 import { signIn, useSession } from "next-auth/react";
 import Button from "./button";
@@ -20,7 +26,7 @@ const apps = [
   },
   {
     name: "activity",
-    icon: FaWaveSquare,
+    icon: MdLegendToggle,
     title: "Aktivitas",
   },
   {
@@ -35,12 +41,12 @@ const apps = [
   },
   {
     name: "blog",
-    icon: FaBlog,
+    icon: MdRssFeed,
     title: "Blog",
   },
   {
     name: "wiki",
-    icon: FaInfoCircle,
+    icon: MdArticle,
     title: "Wiki",
   },
   {

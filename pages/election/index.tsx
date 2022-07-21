@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   const { t } = useTranslation("common");
 
   return (
-    <Layout title="common:home">
+    <Layout title="home">
       <div className="flex flex-col gap-4 p-6 md:p-8 bg-surface1 rounded-3xl">
         <h1 className="text-3xl">Pendaftaran Pemilu PUB 2022</h1>
         <p>
