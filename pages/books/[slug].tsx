@@ -5,6 +5,7 @@ import Head from "next/head";
 import markdownToHtml from "../../lib/markdown";
 import Layout from "../../components/books/layout";
 import markdownStyles from "../../styles/markdown.module.css";
+import { Page } from "../../components/drawer";
 
 interface Author {
   name: string;
@@ -29,7 +30,7 @@ export default function Post({
   posts,
 }: {
   post: PostType;
-  posts: PostType[];
+  posts: Page[];
   preview?: boolean;
 }) {
   const router = useRouter();
