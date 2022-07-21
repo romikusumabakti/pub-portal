@@ -14,13 +14,12 @@ const CandidateCard = ({ candidate }: any) => {
             0{candidate.number}
           </div>
           <Image
-            // src={`/images/election-candidates/${candidate.number}.png`}
-            src="/images/pica.png"
+            src={`/images/election-candidates/${candidate.number}.png`}
             alt={candidate.name}
             // layout="responsive"
             width={256}
             height={256}
-            className={"z-0 rounded-full bg-secondary-container"}
+            className="z-0 rounded-full bg-secondary-container bg-[url('/images/pub-logo-animated-background.svg')] bg-blend-luminosity"
           ></Image>
         </div>
         <div className="flex flex-col flex-1 gap-4">
