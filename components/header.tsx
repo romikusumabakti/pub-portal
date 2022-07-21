@@ -69,19 +69,15 @@ import useTranslation from "next-translate/useTranslation";
 const Header = ({
   handleOpenDrawer,
   path = "common",
-  icon,
   title,
 }: {
   handleOpenDrawer: MouseEventHandler;
   path: string;
-  icon: ({}: any) => JSX.Element;
   title: string;
 }) => {
   const { data: session, status } = useSession();
   const { t } = useTranslation("common");
   const { theme } = useTheme();
-
-  const AppIcon = icon;
 
   return (
     <header className="flex justify-between h-16 pl-2 pr-4 lg:pl-0 md:pr-6 bg-surface1 lg:bg-none lg:bg-transparent text-on-surface">

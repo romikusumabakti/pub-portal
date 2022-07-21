@@ -39,7 +39,9 @@ class Menu extends Component {
   };
 
   render() {
-    return <HUIMenu as="div" className="z-20 md:relative" {...this.props} />;
+    return (
+      <HUIMenu as="div" className="z-20 lg:z-30 md:relative" {...this.props} />
+    );
   }
 }
 

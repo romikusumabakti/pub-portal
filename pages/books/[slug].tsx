@@ -11,7 +11,7 @@ type Author = {
   picture: string;
 };
 
-type PostType = {
+export type PostType = {
   slug: string;
   title: string;
   date: string;
@@ -24,19 +24,20 @@ type PostType = {
   content: string;
 };
 
-type Props = {
+export default function Post({
+  post,
+  posts,
+}: {
   post: PostType;
   posts: PostType[];
   preview?: boolean;
-};
-
-export default function Post({ post, posts }: Props) {
+}) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout menu={posts}>
+    <Layout title="common:home" menu={posts}>
       {router.isFallback ? (
         <h1>Loading…</h1>
       ) : (

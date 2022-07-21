@@ -49,7 +49,6 @@ const Layout = ({ children, title }: { children: any; title: string }) => {
         <Header
           handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
           path="election"
-          icon={ElectionIcon}
           title={title}
         />
         <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto lg:bg-surface lg:rounded-tl-2xl lg:gap-6 lg:px-8 lg:py-6">
