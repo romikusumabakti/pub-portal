@@ -1,6 +1,8 @@
 # PUB Portal (portal.pubpasim.org)
 
-PUB Community portal website.
+PUB Community (students & alumni) portal website.
+
+PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to study and receive programming training.
 
 ## Apps
 - [x] Election (in progress)
@@ -27,6 +29,7 @@ PUB Community portal website.
 - [Next.js](https://nextjs.org/)
 - [React](https://reactjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [NextAuth.js](https://next-auth.js.org/)
 - [Prisma](https://www.prisma.io/)
 - [PostgreSQL](https://www.postgresql.org/)
