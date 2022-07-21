@@ -1,25 +1,46 @@
+import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import { useState } from "react";
 import { MdBook } from "react-icons/md";
+import { PostType } from "../../pages/books/[slug]";
 import Drawer from "../drawer";
 import Header from "../header";
 
-const Layout = ({ children, menu }: any) => {
+const Layout = ({
+  children,
+  title,
+  menu,
+}: {
+  children: any;
+  title: string;
+  menu: PostType[];
+}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const { t } = useTranslation("common");
+
   return (
     <>
-      <Header
-        handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
+      <Head>
+        <title>
+          {t(title)} - {t("books:title")}
+        </title>
+        <meta name="description" content="Pemilihan ketua PUB" />
+        <link rel="icon" href="/favicon/books.ico" />
+      </Head>
+      <Drawer
+        open={openDrawer}
+        handleOpen={() => setOpenDrawer(false)}
         path="books"
         icon={MdBook}
+        buttons={menu}
       />
-      <div className="flex flex-1 min-h-0">
-        <Drawer
-          open={openDrawer}
-          handleOpen={() => setOpenDrawer(false)}
+      <div className="flex flex-col flex-1 min-h-0">
+        <Header
+          handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
           path="books"
-          buttons={menu}
+          title={title}
         />
-        <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto md:gap-6 md:px-8 md:py-6">
+        <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto lg:bg-surface lg:rounded-tl-2xl lg:gap-6 lg:px-8 lg:py-6">
           {children}
         </main>
       </div>

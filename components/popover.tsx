@@ -23,7 +23,7 @@ class Popover extends Component {
   };
 
   render() {
-    return <HUIPopover className="z-20 md:relative" {...this.props} />;
+    return <HUIPopover className="z-20 lg:z-30 md:relative" {...this.props} />;
   }
 }
 
