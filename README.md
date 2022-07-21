@@ -5,8 +5,8 @@ PUB Community (students & alumni) portal website.
 PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to continue their studies (at Universitas Nasional PASIM, Bandung, Indonesia) and learn programming.
 
 ## Apps
-- [x] Election (in progress)
-- [x] Borland X (in progress)
+- [x] Election (almost complete)
+- [x] Borland X (alpha)
 - [ ] Books (in progress)
 - [ ] Activity (planned)
 - [ ] Blog (planned)
@@ -15,7 +15,7 @@ PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opp
 - [ ] Wiki (planned)
 
 ## Languages
-- [x] Bahasa Indonesia (in progress)
+- [x] Bahasa Indonesia (available)
 - [ ] English (in progress)
 - [ ] العربية (planned)
 - [ ] Basa Sunda (planned)
