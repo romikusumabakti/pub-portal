@@ -2,8 +2,7 @@ import useTranslation from "next-translate/useTranslation";
 import Head from "next/head";
 import { useState } from "react";
 import { MdBook } from "react-icons/md";
-import { PostType } from "../../pages/books/[slug]";
-import Drawer from "../drawer";
+import Drawer, { Page } from "../drawer";
 import Header from "../header";
 
 const Layout = ({
@@ -13,7 +12,7 @@ const Layout = ({
 }: {
   children: any;
   title: string;
-  menu: PostType[];
+  menu: Page[];
 }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const { t } = useTranslation("common");
