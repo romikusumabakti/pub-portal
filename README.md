@@ -1,12 +1,12 @@
 # PUB Portal (portal.pubpasim.org)
 
-PUB Community (students & alumni) portal website.
+PUB Community (students & alumni) portal website. Built with carefully crafted UI based on (Material Design 3 (Material You) guidelines)[https://m3.material.io/].
 
 PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to continue their studies (at Universitas Nasional PASIM, Bandung, Indonesia) and learn programming.
 
 ## Apps
 - [x] Election (almost complete)
-- [x] Borland X (alpha)
+- [x] [Borland X](https://github.com/romikusumabakti/borland-x) (alpha)
 - [ ] Books (in progress)
 - [ ] Activity (planned)
 - [ ] Blog (planned)
