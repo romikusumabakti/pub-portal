@@ -2,7 +2,7 @@
 
 PUB Community (students & alumni) portal website.
 
-PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to study and receive programming training.
+PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to continue their studies (at Universitas Nasional PASIM, Bandung, Indonesia) and learn programming.
 
 ## Apps
 - [x] Election (in progress)
