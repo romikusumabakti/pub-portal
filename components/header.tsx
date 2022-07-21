@@ -62,16 +62,18 @@ const apps = [
   },
 ];
 
-interface Props {
-  handleOpenDrawer: MouseEventHandler;
-  path: string;
-  icon: ({}: any) => JSX.Element;
-}
-
 import Popover from "./popover";
 import QuickSettings from "./quick-settings";
 
-const Header = ({ handleOpenDrawer, path = "common", icon }: Props) => {
+const Header = ({
+  handleOpenDrawer,
+  path = "common",
+  icon,
+}: {
+  handleOpenDrawer: MouseEventHandler;
+  path: string;
+  icon: ({}: any) => JSX.Element;
+}) => {
   const { data: session, status } = useSession();
 
   const { theme } = useTheme();
