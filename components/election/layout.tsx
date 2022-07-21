@@ -18,37 +18,41 @@ import ElectionIcon from "../icons/election-icon";
 export const menu = [
   { title: "home", path: "", icon: <MdHome /> },
   { title: "election:schedule", path: "/schedule", icon: <MdEvent /> },
-  { title: "election:candidate", path: "/candidate", icon: <MdAccountBox /> },
-  { title: "election:voter", path: "/voter", icon: <MdPeople /> },
+  { title: "election:candidates", path: "/candidates", icon: <MdAccountBox /> },
+  { title: "election:voters", path: "/voters", icon: <MdPeople /> },
   { title: "election:simulation", path: "/simulation", icon: <MdHowToVote /> },
   { title: "election:statistic", path: "/statistic", icon: <MdBarChart /> },
   { title: "election:result", path: "/result", icon: <MdDataUsage /> },
 ];
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children, title }: { children: any; title: string }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   return (
     <>
       <Head>
-        <title>{t("election:title")}</title>
+        <title>
+          {t(title)} - {t("election:title")}
+        </title>
         <meta name="description" content="Pemilihan ketua PUB" />
         <link rel="icon" href="/favicon/election.ico" />
       </Head>
-      <Header
-        handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
+      <Drawer
+        open={openDrawer}
+        handleOpen={() => setOpenDrawer(false)}
         path="election"
         icon={ElectionIcon}
+        buttons={menu}
       />
-      <div className="flex flex-1 min-h-0">
-        <Drawer
-          open={openDrawer}
-          handleOpen={() => setOpenDrawer(false)}
+      <div className="flex flex-col flex-1 min-h-0">
+        <Header
+          handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
           path="election"
-          buttons={menu}
+          icon={ElectionIcon}
+          title={title}
         />
-        <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto md:gap-6 md:px-8 md:py-6">
+        <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto lg:bg-surface lg:rounded-tl-2xl lg:gap-6 lg:px-8 lg:py-6">
           {children}
           <Footer />
         </main>

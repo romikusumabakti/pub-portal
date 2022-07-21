@@ -1,27 +1,20 @@
 import useTranslation from "next-translate/useTranslation";
-import Image from "next/image";
+import { Candidate } from "../../pages/election";
 import Button from "../button";
 import MaterialThemed from "../material-themed";
+import CandidatePhoto from "./candidate-photo";
 
-const CandidateCard = ({ candidate }: any) => {
-  const { t, lang } = useTranslation("common");
+const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
+  const { t } = useTranslation("common");
 
   return (
     <MaterialThemed color={candidate.color}>
       <div className="flex flex-1 gap-4 p-4 md:px-8 md:py-6 md:gap-4 md:flex-col rounded-3xl bg-surface1 text-primary">
-        <div className="relative self-start w-1/4 md:w-full">
-          <div className="absolute z-10 flex items-center justify-center w-1/4 text-xs font-bold rounded-full md:text-2xl h-1/4 display bg-primary text-on-primary">
-            0{candidate.number}
-          </div>
-          <Image
-            src={`/images/election-candidates/${candidate.number}.png`}
-            alt={candidate.name}
-            // layout="responsive"
-            width={256}
-            height={256}
-            className="z-0 rounded-full bg-secondary-container bg-[url('/images/pub-logo-animated-background.svg')] bg-blend-luminosity"
-          ></Image>
-        </div>
+        <CandidatePhoto
+          candidate={candidate}
+          className="self-start w-1/4 text-xs md:w-full md:text-2xl"
+          themed={false}
+        />
         <div className="flex flex-col flex-1 gap-4">
           <div className="flex items-center flex-1 text-xl font-bold display">
             {candidate.name}

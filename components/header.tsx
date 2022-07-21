@@ -64,42 +64,32 @@ const apps = [
 
 import Popover from "./popover";
 import QuickSettings from "./quick-settings";
+import useTranslation from "next-translate/useTranslation";
 
 const Header = ({
   handleOpenDrawer,
   path = "common",
   icon,
+  title,
 }: {
   handleOpenDrawer: MouseEventHandler;
   path: string;
   icon: ({}: any) => JSX.Element;
+  title: string;
 }) => {
   const { data: session, status } = useSession();
-
+  const { t } = useTranslation("common");
   const { theme } = useTheme();
 
   const AppIcon = icon;
 
   return (
-    <header className="z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-surface1 text-on-surface">
-      <div className="flex gap-2">
+    <header className="flex justify-between h-16 pl-2 pr-4 lg:pl-0 md:pr-6 bg-surface1 lg:bg-none lg:bg-transparent text-on-surface">
+      <div className="flex items-center gap-2">
         <IconButton onClick={handleOpenDrawer} large className="lg:hidden">
           <MdMenu />
         </IconButton>
-        <Link href={`/${path}`}>
-          <a className="flex items-center gap-2">
-            <AppIcon className="w-8" />
-            <span className="text-xl display">
-              <Trans
-                i18nKey={`${path}:logo`}
-                components={[
-                  <span key={0} className="font-bold text-primary" />,
-                  <span key={1} />,
-                ]}
-              />
-            </span>
-          </a>
-        </Link>
+        <h1 className="text-xl">{t(title)}</h1>
       </div>
       {/* <input
         placeholder="Telusuri"

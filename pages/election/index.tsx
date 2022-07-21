@@ -2,10 +2,15 @@ import Layout from "../../components/election/layout";
 import { NextPage } from "next";
 import Button from "../../components/button";
 import useTranslation from "next-translate/useTranslation";
-import Image from "next/image";
-import MaterialThemed from "../../components/material-themed";
+import CandidatePhoto from "../../components/election/candidate-photo";
 
-export const candidates = [
+export interface Candidate {
+  number: number;
+  name: string;
+  color: string;
+}
+
+export const candidates: Candidate[] = [
   {
     number: 1,
     name: "Anggi Permana",
@@ -24,10 +29,10 @@ export const candidates = [
 ];
 
 const Home: NextPage = () => {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   return (
-    <Layout>
+    <Layout title="common:home">
       <div className="flex flex-col gap-4 p-6 md:p-8 bg-surface1 rounded-3xl">
         <h1 className="text-3xl">Pendaftaran Pemilu PUB 2022</h1>
         <p>
@@ -48,21 +53,12 @@ const Home: NextPage = () => {
         <h1 className="text-3xl">3 kandidat dari S1 Teknik Informatika</h1>
         <div className="flex gap-4">
           {candidates.map((candidate) => (
-            <MaterialThemed key={candidate.number} color={candidate.color}>
-              <div className="relative">
-                <div className="absolute z-10 flex items-center justify-center w-1/4 font-bold rounded-full h-1/4 display bg-primary text-on-primary">
-                  0{candidate.number}
-                </div>
-                <Image
-                  src={`/images/election-candidates/${candidate.number}.png`}
-                  alt={candidate.name}
-                  // layout="responsive"
-                  width={128}
-                  height={128}
-                  className={"z-0 rounded-full bg-secondary-container"}
-                ></Image>
-              </div>
-            </MaterialThemed>
+            <CandidatePhoto
+              key={candidate.number}
+              candidate={candidate}
+              className="text-xs md:text-sm"
+              size={128}
+            />
           ))}
         </div>
         <p>

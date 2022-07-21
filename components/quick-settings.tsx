@@ -22,7 +22,7 @@ const QuickSettings = ({ className }: any) => {
 
   return (
     <div
-      className={`flex rounded-full bg-secondary-container border-on-surface ${className}`}
+      className={`flex rounded-full bg-surface4 border-on-surface ${className}`}
     >
       <IconButton onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
         {theme === "dark" || (!theme && systemTheme === "dark") ? (
