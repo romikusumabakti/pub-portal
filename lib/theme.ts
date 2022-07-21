@@ -1,11 +1,17 @@
 import {
   blueFromArgb,
   greenFromArgb,
-  hexFromArgb,
   redFromArgb,
+  Theme,
 } from "@material/material-color-utilities/dist";
 
-export function applyTheme(theme, options) {
+export function applyTheme(
+  theme: Theme,
+  options?: {
+    dark?: boolean;
+    target?: HTMLElement;
+  }
+): void {
   var _a;
   const target =
     (options === null || options === void 0 ? void 0 : options.target) ||

@@ -5,21 +5,19 @@ interface VariantStyle {
   stateLayer: string;
 }
 
-interface Prop {
-  children: any;
-  className?: string;
-  variant?: string;
-  size?: string;
-  onClick?: MouseEventHandler;
-}
-
 const Button = ({
   children,
   className,
   variant = "filled",
   size = "medium",
   onClick,
-}: Prop) => {
+}: {
+  children: any;
+  className?: string;
+  variant?: string;
+  size?: string;
+  onClick?: MouseEventHandler;
+}) => {
   const variants: Record<string, VariantStyle> = {
     filled: {
       button: "bg-primary text-on-primary",

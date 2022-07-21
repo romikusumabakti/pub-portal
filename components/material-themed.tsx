@@ -2,16 +2,17 @@ import {
   argbFromHex,
   themeFromSourceColor,
 } from "@material/material-color-utilities/dist";
-import { applyTheme } from "../utils/theme";
+import { applyTheme } from "../lib/theme";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
 
-interface MaterialThemedProps {
+const MaterialThemed = ({
+  children,
+  color,
+}: {
   children: any;
   color: string;
-}
-
-const MaterialThemed = ({ children, color }: MaterialThemedProps) => {
+}) => {
   const { theme, systemTheme } = useTheme();
   const materialtheme = themeFromSourceColor(argbFromHex(color));
   const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +24,7 @@ const MaterialThemed = ({ children, color }: MaterialThemedProps) => {
       dark = true;
     }
     applyTheme(materialtheme, {
-      target: ref.current,
+      target: ref.current!,
       dark: dark,
     });
   }, [materialtheme, theme, systemTheme]);

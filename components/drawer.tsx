@@ -10,14 +10,17 @@ interface Page {
   icon: any;
 }
 
-interface Props {
+const Drawer = ({
+  open,
+  handleOpen,
+  path,
+  buttons = [],
+}: {
   open: Boolean;
   handleOpen: MouseEventHandler;
   path: string;
   buttons: Page[];
-}
-
-const Drawer = ({ open, handleOpen, path, buttons = [] }: Props) => {
+}) => {
   const { pathname } = useRouter();
   const { t } = useTranslation("common");
 
