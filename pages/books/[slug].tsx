@@ -6,12 +6,12 @@ import markdownToHtml from "../../lib/markdown";
 import Layout from "../../components/books/layout";
 import markdownStyles from "../../styles/markdown.module.css";
 
-type Author = {
+interface Author {
   name: string;
   picture: string;
-};
+}
 
-export type PostType = {
+interface PostType {
   slug: string;
   title: string;
   date: string;
@@ -22,7 +22,7 @@ export type PostType = {
     url: string;
   };
   content: string;
-};
+}
 
 export default function Post({
   post,

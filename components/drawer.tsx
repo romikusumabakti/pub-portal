@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Key, MouseEventHandler } from "react";
 import QuickSettings from "./quick-settings";
 
-interface Page {
+export interface Page {
   title: string;
   path: Key;
   icon: any;
