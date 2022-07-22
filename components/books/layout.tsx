@@ -1,9 +1,9 @@
 import useTranslation from "next-translate/useTranslation";
 import Head from "next/head";
 import { useState } from "react";
-import { MdBook } from "react-icons/md";
 import Drawer, { Page } from "../drawer";
 import Header from "../header";
+import { apps } from "../right-bar";
 
 const Layout = ({
   children,
@@ -29,14 +29,14 @@ const Layout = ({
       <Drawer
         open={openDrawer}
         handleOpen={() => setOpenDrawer(false)}
-        path="books"
-        icon={MdBook}
+        app={apps.books}
+        page={menu[0]}
         buttons={menu}
       />
       <div className="flex flex-col flex-1 min-h-0">
         <Header
           handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
-          path="books"
+          appId={apps.books.id}
           title={title}
         />
         <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto lg:bg-surface lg:rounded-tl-2xl lg:gap-6 lg:px-8 lg:py-6">
