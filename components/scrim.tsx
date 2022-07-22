@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-const Backdrop = () => {
+const Scrim = () => {
   return (
     <Transition.Child
       as={Fragment}
@@ -12,9 +12,9 @@ const Backdrop = () => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="fixed inset-0 z-20 bg-black/50" />
+      <div className="fixed inset-0 z-20 bg-black/[0.32]" />
     </Transition.Child>
   );
 };
 
-export default Backdrop;
+export default Scrim;

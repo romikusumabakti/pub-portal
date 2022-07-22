@@ -1,6 +1,7 @@
 import { Menu as HUIMenu, Transition } from "@headlessui/react";
 import { Component } from "react";
-import Backdrop from "./backdrop";
+import Scrim from "./scrim";
+import MenuTransition from "./menu-transition";
 
 class Menu extends Component {
   static Button = ({ ...props }) => {
@@ -10,12 +11,14 @@ class Menu extends Component {
   static Items = ({ className, ...props }: any) => {
     return (
       <Transition>
-        <Backdrop />
-        <HUIMenu.Items
-          as="div"
-          className={`absolute z-20 origin-top-right top-1/2 right-1/2 md:top-auto translate-x-1/2 -translate-y-1/2 md:transform-none md:right-0 w-48 rounded bg-surface1 flex flex-col ${className}`}
-          {...props}
-        />
+        <Scrim />
+        <MenuTransition>
+          <HUIMenu.Items
+            as="div"
+            className={`absolute z-20 origin-top-right top-1/2 right-1/2 md:top-auto translate-x-1/2 -translate-y-1/2 md:transform-none md:right-0 w-48 rounded bg-surface1 flex flex-col ${className}`}
+            {...props}
+          />
+        </MenuTransition>
       </Transition>
     );
   };

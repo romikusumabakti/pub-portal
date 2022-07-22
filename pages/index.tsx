@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { FaChrome } from "react-icons/fa";
 import AppLogo from "../components/app-logo";
 import Footer from "../components/footer";
 import RightBar, { apps } from "../components/right-bar";

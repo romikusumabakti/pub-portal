@@ -17,8 +17,8 @@ const Header = ({
   const { t } = useTranslation("common");
 
   return (
-    <header className="flex justify-between h-16 pl-2 pr-4 lg:pl-0 md:pr-6 bg-surface1 lg:bg-none lg:bg-transparent text-on-surface">
-      <div className="flex items-center gap-2">
+    <header className="flex justify-between bg-surface1 lg:bg-none lg:bg-transparent text-on-surface">
+      <div className="flex items-center gap-2 px-2 lg:px-0">
         <IconButton onClick={handleOpenDrawer} large className="lg:hidden">
           <MdMenu />
         </IconButton>

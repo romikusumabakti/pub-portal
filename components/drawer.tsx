@@ -30,7 +30,7 @@ const Drawer = ({
     <>
       <div
         className={`fixed lg:static inset-0 bg-black ease-in-out z-20 duration-200 ${
-          open ? "bg-opacity-50" : "bg-opacity-0 pointer-events-none"
+          open ? "bg-opacity-[0.32]" : "bg-opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
         onClick={handleOpen}
@@ -40,9 +40,7 @@ const Drawer = ({
           !open && "-translate-x-full"
         }`}
       >
-        <div className="ml-4">
-          <AppLogo app={app} />
-        </div>
+        <AppLogo app={app} />
         <nav className="flex flex-col">
           {buttons.map((button) => (
             <Link key={button.path} href={`/election${button.path}`}>
