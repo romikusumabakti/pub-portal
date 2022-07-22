@@ -1,17 +1,19 @@
 import CandidateCard from "../../components/election/candidate-card";
-import Layout from "../../components/election/layout";
 import { NextPage } from "next";
-import { candidates } from ".";
+import ElectionLayout, {
+  candidates,
+  pages,
+} from "../../components/election/layout";
 
 const Candidates: NextPage = () => {
   return (
-    <Layout title="election:candidates">
+    <ElectionLayout page={pages[2]}>
       <div className="flex flex-col gap-4 lg:gap-6 md:flex-row">
         {candidates.map((candidate) => (
           <CandidateCard key={candidate.number} candidate={candidate} />
         ))}
       </div>
-    </Layout>
+    </ElectionLayout>
   );
 };
 

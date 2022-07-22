@@ -1,24 +1,21 @@
 import { Menu as HUIMenu, Transition } from "@headlessui/react";
 import { Component } from "react";
 import Backdrop from "./backdrop";
-import MenuTransition from "./menu-transition";
 
 class Menu extends Component {
   static Button = ({ ...props }) => {
     return <HUIMenu.Button {...props} />;
   };
 
-  static Items = ({ ...props }) => {
+  static Items = ({ className, ...props }: any) => {
     return (
       <Transition>
         <Backdrop />
-        <MenuTransition>
-          <HUIMenu.Items
-            as="div"
-            className="absolute top-0 right-0 flex flex-col w-48 origin-top-right rounded md:top-auto bg-surface1"
-            {...props}
-          />
-        </MenuTransition>
+        <HUIMenu.Items
+          as="div"
+          className={`absolute z-20 origin-top-right top-1/2 right-1/2 md:top-auto translate-x-1/2 -translate-y-1/2 md:transform-none md:right-0 w-48 rounded bg-surface1 flex flex-col ${className}`}
+          {...props}
+        />
       </Transition>
     );
   };
@@ -39,9 +36,7 @@ class Menu extends Component {
   };
 
   render() {
-    return (
-      <HUIMenu as="div" className="z-20 lg:z-30 md:relative" {...this.props} />
-    );
+    return <HUIMenu as="div" className="md:relative" {...this.props} />;
   }
 }
 
