@@ -103,23 +103,11 @@ h6 {
   font-family: "Google Sans Display", sans-serif;
 }
 
-a {
+/* a {
   color: inherit;
   text-decoration: none;
-}
+} */
 
 * {
   box-sizing: border-box;
-}
-
-body,
-header,
-aside {
-  @apply duration-200 ease-in-out text-zinc-800 dark:text-zinc-200;
-}
-
-body > div {
-  height: 100vh;
-  display: flex;
-  @apply bg-surface lg:bg-surface1;
 }

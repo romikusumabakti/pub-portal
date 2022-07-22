@@ -116,7 +116,7 @@ const RightBar = ({ activeAppId }: { activeAppId: string }) => {
   const { theme } = useTheme();
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center h-16 gap-4 px-4">
       <QuickSettings className="hidden md:flex" />
       <Popover>
         <Popover.Button as={IconButton}>
