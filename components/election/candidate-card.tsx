@@ -1,8 +1,8 @@
 import useTranslation from "next-translate/useTranslation";
-import { Candidate } from "../../pages/election";
 import Button from "../button";
 import MaterialThemed from "../material-themed";
 import CandidatePhoto from "./candidate-photo";
+import { Candidate } from "./layout";
 
 const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
   const { t } = useTranslation("common");
