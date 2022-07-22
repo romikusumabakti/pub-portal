@@ -2,7 +2,7 @@
   "locales": ["id", "en", "ar", "su", "jv", "min", "ms", "btk"],
   "defaultLocale": "id",
   "pages": {
-    "*": ["common"],
+    "*": ["common", "portal"],
     "rgx:^/election(/.*)?$": ["election"],
     "rgx:^/books(/.*)?$": ["books"]
   }

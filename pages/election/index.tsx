@@ -1,38 +1,17 @@
-import Layout from "../../components/election/layout";
 import { NextPage } from "next";
 import Button from "../../components/button";
 import useTranslation from "next-translate/useTranslation";
 import CandidatePhoto from "../../components/election/candidate-photo";
-
-export interface Candidate {
-  number: number;
-  name: string;
-  color: string;
-}
-
-export const candidates: Candidate[] = [
-  {
-    number: 1,
-    name: "Anggi Permana",
-    color: "#f44336",
-  },
-  {
-    number: 2,
-    name: "Fadli Fathurrahman",
-    color: "#ffc107",
-  },
-  {
-    number: 3,
-    name: "Sawaluddin Siregar",
-    color: "#2196f3",
-  },
-];
+import ElectionLayout, {
+  candidates,
+  pages,
+} from "../../components/election/layout";
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
 
   return (
-    <Layout title="home">
+    <ElectionLayout page={pages[0]}>
       <div className="flex flex-col gap-4 p-6 md:p-8 bg-surface1 rounded-3xl">
         <h1 className="text-3xl">Pendaftaran Pemilu PUB 2022</h1>
         <p>
@@ -86,7 +65,7 @@ const Home: NextPage = () => {
           <Button>{t("election:try-simulation")}</Button>
         </div>
       </div>
-    </Layout>
+    </ElectionLayout>
   );
 };
 
