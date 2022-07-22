@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Candidate } from "../../pages/election";
 import MaterialThemed from "../material-themed";
+import { Candidate } from "./layout";
 
 const CandidatePhoto = ({
   candidate,
