@@ -6,7 +6,7 @@ const AppLogo = ({ app }: { app: App }) => {
   const AppIcon = app.icon;
 
   return (
-    <Link href={`/${app.path}`}>
+    <Link href={app.path}>
       <a className="flex items-center gap-2">
         <AppIcon size={32} className="text-primary" />
         <span className="text-xl display">
