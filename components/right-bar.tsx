@@ -1,5 +1,4 @@
 import { signIn, useSession } from "next-auth/react";
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { FaUsers } from "react-icons/fa";
@@ -113,19 +112,13 @@ const buttons = [
 
 const RightBar = ({ activeAppId }: { activeAppId: string }) => {
   const { data: session, status } = useSession();
-  const { theme } = useTheme();
 
   return (
     <div className="flex items-center h-16 gap-4 px-4">
       <QuickSettings className="hidden md:flex" />
       <Popover>
         <Popover.Button as={IconButton}>
-          <Image
-            src={`/images/pub-portal-animated-${theme}.svg`}
-            alt="PUB Portal icon"
-            width={32}
-            height={32}
-          />
+          <PortalIcon />
         </Popover.Button>
         <Popover.Panel className="flex flex-col gap-2 p-4 bg-surface1 rounded-3xl">
           <div className="flex justify-center p-2">

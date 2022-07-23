@@ -2,11 +2,11 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 
 const PortalIcon = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <Image
-      src={`/images/pub-portal-animated-${theme}.svg`}
+      src={`/images/pub-portal-animated-${resolvedTheme}.svg`}
       alt="PUB Portal icon"
       width={32}
       height={32}
