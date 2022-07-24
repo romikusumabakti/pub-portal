@@ -29,12 +29,15 @@ PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opp
 - [Next.js](https://nextjs.org/) (framework)
 - [React](https://reactjs.org/) (UI library)
 - [Tailwind CSS](https://tailwindcss.com/) (UI styling)
-- [TypeScript](https://www.typescriptlang.org/) (programming language)
-- [NextAuth.js](https://next-auth.js.org/) (authentication)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) and [TypeScript](https://www.typescriptlang.org/) (programming languages)
 - [Prisma](https://www.prisma.io/) (ORM)
 - [PostgreSQL](https://www.postgresql.org/) (database)
+- [NextAuth.js](https://next-auth.js.org/) and [Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2) (authentication)
+- [Node.js](https://nodejs.org/) (runtime)
+- [Git](https://git-scm.com/) and [GitHub](https://github.com/) (version control)
 - [Vercel](https://vercel.com/) (deployment)
 - [Heroku](https://www.heroku.com/) (database hosting)
+- [Google Analytics](https://analytics.google.com/) (analytics)
 
 ## License
 
