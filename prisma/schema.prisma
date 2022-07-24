@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model StudentRegistration {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Person {
+  id               Int              @id @default(autoincrement())
+  name             String
+  photo            String?
+  gender           Gender
+  placeOfBirth     String?
+  birthday         DateTime?
+  addressLatitude  Decimal
+  addressLongitude Decimal
+  email            String?          @unique
+  mobileNumber     String?          @unique
+  github           String?
+  linkedin         String?
+  student          Student?
+  teachSchedules   CourseSchedule[]
+}
+
+model CampusRoom {
+  id             Int              @id @default(autoincrement())
+  name           String
+  courseSchedule CourseSchedule[]
+}
+
+model Course {
+  id              Int              @id @default(autoincrement())
+  name            String
+  duration        Int
+  courseSchedules CourseSchedule[]
+}
+
+model Dorm {
+  id         Int             @id @default(autoincrement())
+  name       String
+  dormBlocks DormBlock[]
+  residents  ActiveStudent[]
+}
+
+model DormBlock {
+  id     Int    @id @default(autoincrement())
+  dorm   Dorm   @relation(fields: [dormId], references: [id])
+  dormId Int
+  name   String
+}
+
+model Generation {
+  id       Int       @id @default(autoincrement())
+  number   Int
+  name     String
+  slogan   String?
+  students Student[]
+}
+
+model Student {
+  id            Int            @id @default(autoincrement())
+  person        Person         @relation(fields: [personId], references: [id])
+  personId      Int            @unique
+  nim           String         @unique
+  generation    Generation     @relation(fields: [generationId], references: [id])
+  generationId  Int
+  activeStudent ActiveStudent?
+}
+
+model ActiveStudent {
+  id                    Int                    @id @default(autoincrement())
+  student               Student                @relation(fields: [studentId], references: [id])
+  studentId             Int                    @unique
+  dorm                  Dorm                   @relation(fields: [dormId], references: [id])
+  dormId                Int
+  dormCleaningSchedules DormCleaningSchedule[]
+  courseGroups          CourseGroup[]
+  spiritualPoints       Int
+  spiritualPenalties    Int
+}
+
+model CourseGroup {
+  id              Int              @id @default(autoincrement())
+  name            String
+  participants    ActiveStudent[]
+  courseSchedules CourseSchedule[]
+}
+
+enum Day {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+model CourseSchedule {
+  id            Int         @id @default(autoincrement())
+  course        Course      @relation(fields: [courseId], references: [id])
+  courseId      Int
+  courseGroup   CourseGroup @relation(fields: [courseGroupId], references: [id])
+  courseGroupId Int
+  instructor    Person      @relation(fields: [instructorId], references: [id])
+  instructorId  Int
+  day           Day
+  room          CampusRoom  @relation(fields: [campusRoomId], references: [id])
+  campusRoomId  Int
+}
+
+model DormCleaningSchedule {
+  id        Int           @id @default(autoincrement())
+  week      Int
+  day       Day
+  student   ActiveStudent @relation(fields: [studentId], references: [id])
+  studentId Int
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String
+  password String
+  posts    Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean? @default(false)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}

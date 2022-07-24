@@ -8,11 +8,11 @@ PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opp
 - [x] Election (almost complete)
 - [x] [Borland X](https://github.com/romikusumabakti/borland-x) (alpha)
 - [ ] Books (in progress)
+- [ ] Wiki (planned)
 - [ ] Activity (planned)
 - [ ] Blog (planned)
 - [ ] Universe (planned)
 - [ ] Forum (planned)
-- [ ] Wiki (planned)
 
 ## Languages
 - [x] Bahasa Indonesia (available)
@@ -26,14 +26,15 @@ PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opp
 
 ## Tech stack
 
-- [Next.js](https://nextjs.org/)
-- [React](https://reactjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [NextAuth.js](https://next-auth.js.org/)
-- [Prisma](https://www.prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Vercel](https://vercel.com/)
+- [Next.js](https://nextjs.org/) (framework)
+- [React](https://reactjs.org/) (UI library)
+- [Tailwind CSS](https://tailwindcss.com/) (UI styling)
+- [TypeScript](https://www.typescriptlang.org/) (programming language)
+- [NextAuth.js](https://next-auth.js.org/) (authentication)
+- [Prisma](https://www.prisma.io/) (ORM)
+- [PostgreSQL](https://www.postgresql.org/) (database)
+- [Vercel](https://vercel.com/) (deployment)
+- [Heroku](https://www.heroku.com/) (database hosting)
 
 ## License
 
