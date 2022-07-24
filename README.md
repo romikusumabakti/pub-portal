@@ -5,14 +5,14 @@ PUB integrated management information system for committe, students, and alumni.
 PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to continue their studies (at Universitas Nasional PASIM, Bandung, Indonesia) and learn programming.
 
 ## Apps
-- [x] [Election](https://portal.pubpasim.org/election) (almost complete)
+- [x] [PUB Election](https://portal.pubpasim.org/election) (almost complete)
 - [x] [Borland X](https://github.com/romikusumabakti/borland-x) (alpha)
-- [ ] Books (in progress)
-- [ ] Wiki (planned)
-- [ ] Activity (planned)
-- [ ] Blog (planned)
-- [ ] Universe (planned)
-- [ ] Forum (planned)
+- [ ] [PUB Books](https://portal.pubpasim.org/books) (in progress)
+- [ ] PUB Wiki (planned)
+- [ ] PUB Activity (planned)
+- [ ] PUB Blog (planned)
+- [ ] PUB Universe (planned)
+- [ ] PUB Forum (planned)
 
 ## Languages
 - [x] Bahasa Indonesia (available)
@@ -34,6 +34,7 @@ PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opp
 - [PostgreSQL](https://www.postgresql.org/) (database)
 - [NextAuth.js](https://next-auth.js.org/) and [Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2) (authentication)
 - [Node.js](https://nodejs.org/) (runtime)
+- [NPM](https://www.npmjs.com/) (package manager)
 - [Git](https://git-scm.com/) and [GitHub](https://github.com/) (version control)
 - [Vercel](https://vercel.com/) (deployment)
 - [Heroku](https://www.heroku.com/) (database hosting)
