@@ -1,13 +1,11 @@
-import { NextPage } from "next";
 import Button from "../../components/button";
 import useTranslation from "next-translate/useTranslation";
 import CandidatePhoto from "../../components/election/candidate-photo";
-import ElectionLayout, {
-  candidates,
-  pages,
-} from "../../components/election/layout";
+import ElectionLayout, { pages } from "../../components/election/layout";
+import prisma from "../../lib/prisma";
+import { Candidate } from "@prisma/client";
 
-const Home: NextPage = () => {
+const Home = ({ candidates }: { candidates: Candidate[] }) => {
   const { t } = useTranslation("common");
 
   return (
@@ -33,7 +31,7 @@ const Home: NextPage = () => {
         <div className="flex gap-4">
           {candidates.map((candidate) => (
             <CandidatePhoto
-              key={candidate.number}
+              key={candidate.id}
               candidate={candidate}
               className="text-xs md:text-sm"
               size={128}
@@ -46,9 +44,11 @@ const Home: NextPage = () => {
           studi, serta jenjang yang sama, yaitu S1 Teknik Informatika.
         </p>
         <ul>
-          <li>01 Anggi Permana</li>
-          <li>02 Muhammad Fadli Fathurrahman</li>
-          <li>03 Sawaluddin Siregar</li>
+          {candidates.map((candidate) => (
+            <li key={candidate.id}>
+              0{candidate.number} {candidate.name}
+            </li>
+          ))}
         </ul>
         <div className="flex justify-end gap-4">
           <Button variant="tonal">{t("more")}</Button>
@@ -67,6 +67,15 @@ const Home: NextPage = () => {
       </div>
     </ElectionLayout>
   );
+};
+
+export const getServerSideProps = async () => {
+  const candidates = await prisma.candidate.findMany({
+    where: {
+      electionId: 3,
+    },
+  });
+  return { props: { candidates } };
 };
 
 export default Home;

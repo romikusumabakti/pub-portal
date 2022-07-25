@@ -10,14 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model StudentRegistration {
-  id   Int    @id @default(autoincrement())
-  name String
-}
-
 enum Gender {
   MALE
   FEMALE
+}
+
+enum Day {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
 }
 
 model Person {
@@ -27,8 +32,8 @@ model Person {
   gender           Gender
   placeOfBirth     String?
   birthday         DateTime?
-  addressLatitude  Decimal
-  addressLongitude Decimal
+  addressLatitude  Decimal?
+  addressLongitude Decimal?
   email            String?          @unique
   mobileNumber     String?          @unique
   github           String?
@@ -67,8 +72,9 @@ model DormBlock {
 model Generation {
   id       Int       @id @default(autoincrement())
   number   Int
-  name     String
+  name     String?
   slogan   String?
+  color    String?
   students Student[]
 }
 
@@ -76,10 +82,11 @@ model Student {
   id            Int            @id @default(autoincrement())
   person        Person         @relation(fields: [personId], references: [id])
   personId      Int            @unique
-  nim           String         @unique
+  nim           String?
   generation    Generation     @relation(fields: [generationId], references: [id])
   generationId  Int
   activeStudent ActiveStudent?
+  candidacies   Candidate[]
 }
 
 model ActiveStudent {
@@ -99,16 +106,6 @@ model CourseGroup {
   name            String
   participants    ActiveStudent[]
   courseSchedules CourseSchedule[]
-}
-
-enum Day {
-  SUNDAY
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
 }
 
 model CourseSchedule {
@@ -132,6 +129,11 @@ model DormCleaningSchedule {
   studentId Int
 }
 
+model StudentRegistration {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   username String
@@ -146,4 +148,23 @@ model Post {
   published Boolean? @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+}
+
+model Election {
+  id         Int         @id @default(autoincrement())
+  year       Int
+  candidates Candidate[]
+}
+
+model Candidate {
+  id         Int      @id @default(autoincrement())
+  election   Election @relation(fields: [electionId], references: [id])
+  electionId Int
+  student    Student  @relation(fields: [studentId], references: [id])
+  studentId  Int
+  number     Int
+  color      String
+  name       String?
+  photo      String?
+  votes      Int      @default(0)
 }

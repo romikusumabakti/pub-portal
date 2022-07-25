@@ -11,30 +11,6 @@ import { Page } from "../drawer";
 import Layout from "../layout";
 import { apps } from "../right-bar";
 
-export interface Candidate {
-  number: number;
-  name: string;
-  color: string;
-}
-
-export const candidates: Candidate[] = [
-  {
-    number: 1,
-    name: "Anggi Permana",
-    color: "#f44336",
-  },
-  {
-    number: 2,
-    name: "Fadli Fathurrahman",
-    color: "#ffc107",
-  },
-  {
-    number: 3,
-    name: "Sawaluddin Siregar",
-    color: "#2196f3",
-  },
-];
-
 export const pages: Page[] = [
   {
     id: "home",
