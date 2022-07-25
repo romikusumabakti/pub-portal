@@ -1,6 +1,6 @@
+import { Candidate } from "@prisma/client";
 import Image from "next/image";
 import MaterialThemed from "../material-themed";
-import { Candidate } from "./layout";
 
 const CandidatePhoto = ({
   candidate,
@@ -20,7 +20,7 @@ const CandidatePhoto = ({
       </div>
       <Image
         src={`/images/election-candidates/${candidate.number}.png`}
-        alt={candidate.name}
+        alt={candidate.color}
         // layout="responsive"
         width={size}
         height={size}
