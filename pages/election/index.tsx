@@ -26,7 +26,7 @@ const renderer = ({
   } else {
     return (
       <span className="text-xl">
-        {days} hari, {hours} jam, {minutes} menit, {seconds} detik lagi
+        {days} hari, {hours} jam, {minutes} menit, {seconds} detik
       </span>
     );
   }
@@ -75,8 +75,8 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
           <li>Anda bisa meninggalkan TPS</li>
         </ul>
         <p className="text-sm">
-          *token hanya berlaku 1 jam dan selalu dapat dihasilkan lagi sampai
-          Anda melakukan pemilihan
+          *token hanya berlaku selama 1 jam dan selalu dapat dihasilkan lagi
+          sampai Anda melakukan pemilihan
         </p>
       </Card>
       <Card>
