@@ -5,30 +5,82 @@ import ElectionLayout, { pages } from "../../components/election/layout";
 import prisma from "../../lib/prisma";
 import { Candidate } from "@prisma/client";
 import { GetStaticProps } from "next";
+import Countdown from "react-countdown";
+import Card from "../../components/card";
+
+const renderer = ({
+  days,
+  hours,
+  minutes,
+  seconds,
+  completed,
+}: {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  completed: boolean;
+}) => {
+  if (completed) {
+    return <p>Pemilihan telah dimulai.</p>;
+  } else {
+    return (
+      <span className="text-xl">
+        {days} hari, {hours} jam, {minutes} menit, {seconds} detik lagi
+      </span>
+    );
+  }
+};
 
 const Home = ({ candidates }: { candidates: Candidate[] }) => {
   const { t } = useTranslation("common");
 
   return (
     <ElectionLayout page={pages[0]}>
-      <div className="flex flex-col gap-4 p-6 md:p-8 bg-surface1 rounded-3xl">
-        <h1 className="text-3xl">Pendaftaran Pemilu PUB 2022</h1>
+      <Card>
+        <h1 className="text-3xl">Pemilu PUB 2022</h1>
+        <p>Waktu tersisa sampai hari pemilihan:</p>
         <p>
-          Pemilihan Ketua PUB tahun 2022 insya Allah akan dilaksanakan pada
-          tanggal 17 Agustus 2022. Untuk mengikutinya, Anda harus mengklaim hak
-          pilih Anda dengan membuat Akun PUB Portal. Daftar sekarang juga!
+          <Countdown date={new Date(2022, 7, 17, 7)} renderer={renderer} />
         </p>
-        <p className="text-sm">
-          *Anda harus memiliki Akun Google yang diperlukan untuk otentikasi
-          Google OAuth 2.0 nanti.
-        </p>
+        <p>Rabu, 17 Agustus 2022</p>
         <div className="flex justify-between gap-4 md:justify-end">
           <Button variant="tonal">{t("more")}</Button>
           <Button>{t("create-account")}</Button>
         </div>
-      </div>
-      <div className="flex flex-col gap-4 p-6 md:p-8 bg-surface1 rounded-3xl">
-        <h1 className="text-3xl">3 kandidat dari S1 Teknik Informatika</h1>
+      </Card>
+      <Card>
+        <h1 className="text-3xl">Persyaratan menjadi pemilih</h1>
+        <p>Untuk mengikuti pemilu Anda harus:</p>
+        <ul>
+          <li>Menjadi mahasiswa PUB aktif atau pembina PUB</li>
+          <li>Memiliki akun PUB Portal sebelum hari pemilihan</li>
+        </ul>
+      </Card>
+      <Card>
+        <h1 className="text-3xl">Mekanisme pemilihan</h1>
+        <p>Pada hari pemilihan (Rabu, 17 Agustus 2022) Anda dipersilakan:</p>
+        <ul>
+          <li>Datang ke TPS (ruang B31) pada waktu yang ditentukan:</li>
+          <ul>
+            <li>Angkatan 16 dan 17: pukul 07.00 s.d. 08.00 WIB</li>
+            <li>Angkatan 18 dan 19: pukul 08.00 s.d. 09.00 WIB</li>
+            <li>Angkatan 20: pukul 09.00 s.d. 10.00 WIB</li>
+          </ul>
+          <li>Tunggu pemanggilan dari panitia</li>
+          <li>Sambil menunggu, di halaman Beranda pilih Hasilkan token*</li>
+          <li>Setelah nama Anda dipanggil, silakan menuju ke bilik suara</li>
+          <li>Masukkan token* yang telah Anda dapatkan</li>
+          <li>Di komputer bilik suara, klik kotak kandidat pilihan Anda</li>
+          <li>Anda bisa meninggalkan TPS</li>
+        </ul>
+        <p className="text-sm">
+          *token hanya berlaku 1 jam dan selalu dapat dihasilkan lagi sampai
+          Anda melakukan pemilihan
+        </p>
+      </Card>
+      <Card>
+        <h1 className="text-3xl">Kandidat</h1>
         <div className="flex gap-4">
           {candidates.map((candidate) => (
             <CandidatePhoto
@@ -39,11 +91,6 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
             />
           ))}
         </div>
-        <p>
-          Berbeda dengan pemilihan sebelumnya yang kandidatnya berbeda fakultas,
-          Pemilu kali ini semua kandidatnya berasal dari fakultas, program
-          studi, serta jenjang yang sama, yaitu S1 Teknik Informatika.
-        </p>
         <ul>
           {candidates.map((candidate) => (
             <li key={candidate.id}>
@@ -54,8 +101,8 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
         <div className="flex justify-end gap-4">
           <Button variant="tonal">{t("more")}</Button>
         </div>
-      </div>
-      <div className="flex flex-col gap-4 p-6 md:p-8 bg-surface1 rounded-3xl">
+      </Card>
+      <Card>
         <h1 className="text-3xl">Ingin mencoba pemilihan sekarang?</h1>
         <p>
           Kami menyediakan simulasi pemilihan sebelum pemilihan yang sebenarnya
@@ -65,7 +112,14 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
         <div className="flex justify-end gap-4">
           <Button>{t("election:try-simulation")}</Button>
         </div>
-      </div>
+      </Card>
+      <Card>
+        <h1 className="text-3xl">Hasil pemilu</h1>
+        <p>
+          Demi menjaga kerahasiaan pada saat pemilihan, halaman ini diperbarui
+          paling cepat 5 menit sekali.
+        </p>
+      </Card>
     </ElectionLayout>
   );
 };
