@@ -4,6 +4,7 @@ import CandidatePhoto from "../../components/election/candidate-photo";
 import ElectionLayout, { pages } from "../../components/election/layout";
 import prisma from "../../lib/prisma";
 import { Candidate } from "@prisma/client";
+import { GetStaticProps } from "next";
 
 const Home = ({ candidates }: { candidates: Candidate[] }) => {
   const { t } = useTranslation("common");
@@ -69,13 +70,13 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const candidates = await prisma.candidate.findMany({
     where: {
       electionId: 3,
     },
   });
-  return { props: { candidates } };
+  return { props: { candidates }, revalidate: 60 };
 };
 
 export default Home;
