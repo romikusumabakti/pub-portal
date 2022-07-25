@@ -151,9 +151,18 @@ model Post {
 }
 
 model Election {
-  id         Int         @id @default(autoincrement())
+  id         Int                @id @default(autoincrement())
   year       Int
   candidates Candidate[]
+  schedule   ElectionSchedule[]
+}
+
+model ElectionSchedule {
+  id         Int      @id @default(autoincrement())
+  election   Election @relation(fields: [electionId], references: [id])
+  electionId Int
+  date       DateTime
+  title      String
 }
 
 model Candidate {

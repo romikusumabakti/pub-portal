@@ -2,6 +2,7 @@ import CandidateCard from "../../components/election/candidate-card";
 import ElectionLayout, { pages } from "../../components/election/layout";
 import { Candidate } from "@prisma/client";
 import prisma from "../../lib/prisma";
+import { GetStaticProps } from "next";
 
 const Candidates = ({ candidates }: { candidates: Candidate[] }) => {
   return (
@@ -15,13 +16,13 @@ const Candidates = ({ candidates }: { candidates: Candidate[] }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const candidates = await prisma.candidate.findMany({
     where: {
       electionId: 3,
     },
   });
-  return { props: { candidates } };
+  return { props: { candidates }, revalidate: 60 };
 };
 
 export default Candidates;
