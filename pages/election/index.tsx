@@ -7,6 +7,9 @@ import { Candidate } from "@prisma/client";
 import { GetStaticProps } from "next";
 import Countdown from "react-countdown";
 import Card from "../../components/card";
+import Link from "next/link";
+import Trans from "next-translate/Trans";
+import { MdHowToVote } from "react-icons/md";
 
 const renderer = ({
   days,
@@ -38,14 +41,42 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
   return (
     <ElectionLayout page={pages[0]}>
       <Card>
-        <h1 className="text-3xl">Pemilu PUB 2022</h1>
-        <p>Waktu tersisa sampai hari pemilihan:</p>
-        <p>
-          <Countdown date={new Date(2022, 7, 17, 7)} renderer={renderer} />
-        </p>
-        <p>Rabu, 17 Agustus 2022</p>
+        <div className="flex flex-wrap justify-between gap-4">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <MdHowToVote size={48} className="text-primary" />
+              <h1 className="text-3xl display">
+                <Trans
+                  i18nKey="election:logo"
+                  components={[
+                    <span key={0} className="font-bold text-primary" />,
+                    <span key={1} />,
+                  ]}
+                />{" "}
+                <span>2022</span>
+              </h1>
+            </div>
+            <p>Waktu tersisa sampai hari pemilihan:</p>
+            <p>
+              <Countdown date={new Date(2022, 7, 17, 7)} renderer={renderer} />
+            </p>
+            <p className="font-bold">Rabu, 17 Agustus 2022</p>
+          </div>
+          <div className="flex gap-4">
+            {candidates.map((candidate) => (
+              <CandidatePhoto
+                key={candidate.id}
+                candidate={candidate}
+                className="text-xs md:text-sm"
+                size={128}
+              />
+            ))}
+          </div>
+        </div>
         <div className="flex justify-between gap-4 md:justify-end">
-          <Button variant="tonal">{t("more")}</Button>
+          <Link href="/election/candidates">
+            <Button variant="tonal">{t("more")}</Button>
+          </Link>
           <Button>{t("create-account")}</Button>
         </div>
       </Card>
@@ -53,7 +84,7 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
         <h1 className="text-3xl">Persyaratan menjadi pemilih</h1>
         <p>Untuk mengikuti pemilu Anda harus:</p>
         <ul>
-          <li>Menjadi mahasiswa PUB aktif atau pembina PUB</li>
+          <li>Sedang menjadi mahasiswa PUB aktif atau pembina PUB</li>
           <li>Memiliki akun PUB Portal sebelum hari pemilihan</li>
         </ul>
       </Card>
@@ -72,35 +103,12 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
           <li>Setelah nama Anda dipanggil, silakan menuju ke bilik suara</li>
           <li>Masukkan token* yang telah Anda dapatkan</li>
           <li>Di komputer bilik suara, klik kotak kandidat pilihan Anda</li>
-          <li>Anda bisa meninggalkan TPS</li>
+          <li>Anda dapat langsung meninggalkan TPS</li>
         </ul>
         <p className="text-sm">
           *token hanya berlaku selama 1 jam dan selalu dapat dihasilkan lagi
           sampai Anda melakukan pemilihan
         </p>
-      </Card>
-      <Card>
-        <h1 className="text-3xl">Kandidat</h1>
-        <div className="flex gap-4">
-          {candidates.map((candidate) => (
-            <CandidatePhoto
-              key={candidate.id}
-              candidate={candidate}
-              className="text-xs md:text-sm"
-              size={128}
-            />
-          ))}
-        </div>
-        <ul>
-          {candidates.map((candidate) => (
-            <li key={candidate.id}>
-              0{candidate.number} {candidate.name}
-            </li>
-          ))}
-        </ul>
-        <div className="flex justify-end gap-4">
-          <Button variant="tonal">{t("more")}</Button>
-        </div>
       </Card>
       <Card>
         <h1 className="text-3xl">Ingin mencoba pemilihan sekarang?</h1>
@@ -114,11 +122,16 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
         </div>
       </Card>
       <Card>
-        <h1 className="text-3xl">Hasil pemilu</h1>
+        <h1 className="text-3xl">Hitung cepat</h1>
         <p>
-          Demi menjaga kerahasiaan pada saat pemilihan, halaman ini diperbarui
-          paling cepat 5 menit sekali.
+          Demi menjaga kerahasiaan pada saat pemilihan, jumlah suara tidak akan
+          diperbarui sampai ada setidaknya 2 suara baru untuk masing-masing
+          kandidat.
         </p>
+      </Card>
+      <Card>
+        <h1 className="text-3xl">Hasil pemilu</h1>
+        <p>Hasil pemilu akan ditampilkan setelah pemilihan selesai.</p>
       </Card>
     </ElectionLayout>
   );
