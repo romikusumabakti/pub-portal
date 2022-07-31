@@ -1,5 +1,6 @@
 import { Candidate } from "@prisma/client";
 import useTranslation from "next-translate/useTranslation";
+import Image from "next/image";
 import Button from "../button";
 import MaterialThemed from "../material-themed";
 import CandidatePhoto from "./candidate-photo";
@@ -16,8 +17,14 @@ const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
           themed={false}
         />
         <div className="flex flex-col flex-1 gap-4">
-          <div className="flex items-center flex-1 text-xl font-bold display">
-            {candidate.name}
+          <div className="flex items-center flex-1 gap-4 text-xl font-bold display">
+            <Image
+              src="/images/generation-icons/20.svg"
+              alt="PUB 20 Integer icon"
+              width={24}
+              height={24}
+            />
+            <div>{candidate.name}</div>
           </div>
           <div className="flex flex-wrap justify-between gap-4 md:mt-auto">
             <Button size="small">{t("more")}</Button>

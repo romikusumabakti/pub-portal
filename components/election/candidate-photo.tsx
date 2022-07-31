@@ -19,7 +19,7 @@ const CandidatePhoto = ({
         0{candidate.number}
       </div>
       <Image
-        src={`/images/election-candidates/${candidate.number}.png`}
+        src={`/images/election-candidate-photos/${candidate.number}.png`}
         alt={candidate.color}
         // layout="responsive"
         width={size}
