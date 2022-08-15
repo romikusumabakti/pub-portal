@@ -185,6 +185,6 @@ model ElectionCandidate {
   name       String?
   photo      String?
   vision     String?
-  mission    String[]
+  missions   String[]
   votes      Int      @default(0)
 }

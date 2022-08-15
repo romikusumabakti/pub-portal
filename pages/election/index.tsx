@@ -77,7 +77,7 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
           <Link href="/election/candidates">
             <Button variant="tonal">{t("more")}</Button>
           </Link>
-          <Button>{t("create-account")}</Button>
+          <Button>{t("election:try-simulation")}</Button>
         </div>
       </Card>
       <Card>
@@ -99,16 +99,17 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
             <li>Angkatan 20: pukul 09.00 s.d. 10.00 WIB</li>
           </ul>
           <li>Tunggu pemanggilan dari panitia</li>
-          <li>Sambil menunggu, di halaman Beranda pilih Hasilkan token*</li>
-          <li>Setelah nama Anda dipanggil, silakan menuju ke bilik suara</li>
-          <li>Masukkan token* yang telah Anda dapatkan</li>
-          <li>Di komputer bilik suara, klik kotak kandidat pilihan Anda</li>
+          <li>
+            Setelah nama Anda dipanggil, silakan ambil 1 surat suara digital
+          </li>
+          <li>Kemudian menuju ke bilik suara untuk melakukan pemilihan</li>
+          <li>
+            Di komputer bilik suara, masukkan token yang ada pada surat suara
+            digital Anda (8 digit)
+          </li>
+          <li>Klik kotak kandidat pilihan Anda</li>
           <li>Anda dapat langsung meninggalkan TPS</li>
         </ul>
-        <p className="text-sm">
-          *token hanya berlaku selama 1 jam dan selalu dapat dihasilkan lagi
-          sampai Anda melakukan pemilihan
-        </p>
       </Card>
       <Card>
         <h1 className="text-3xl">Ingin mencoba pemilihan sekarang?</h1>
