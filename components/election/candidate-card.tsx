@@ -1,11 +1,12 @@
-import { Candidate } from "@prisma/client";
+import { ElectionCandidate } from "@prisma/client";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
+import Link from "next/link";
 import Button from "../button";
 import MaterialThemed from "../material-themed";
 import CandidatePhoto from "./candidate-photo";
 
-const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
+const CandidateCard = ({ candidate }: { candidate: ElectionCandidate }) => {
   const { t } = useTranslation("common");
 
   return (
@@ -27,7 +28,9 @@ const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
             <div>{candidate.name}</div>
           </div>
           <div className="flex flex-wrap justify-between gap-4 md:mt-auto">
-            <Button size="small">{t("more")}</Button>
+            <Link href={`./candidates/${candidate.number}`}>
+              <Button size="small">{t("more")}</Button>
+            </Link>
             <Button variant="tonal" size="small">
               {t("view-profile")}
             </Button>

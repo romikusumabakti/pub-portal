@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import CandidatePhoto from "../../components/election/candidate-photo";
 import ElectionLayout, { pages } from "../../components/election/layout";
 import prisma from "../../lib/prisma";
-import { Candidate } from "@prisma/client";
+import { ElectionCandidate } from "@prisma/client";
 import { GetStaticProps } from "next";
 import Countdown from "react-countdown";
 import Card from "../../components/card";
@@ -35,7 +35,7 @@ const renderer = ({
   }
 };
 
-const Home = ({ candidates }: { candidates: Candidate[] }) => {
+const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
   const { t } = useTranslation("common");
 
   return (
@@ -138,7 +138,7 @@ const Home = ({ candidates }: { candidates: Candidate[] }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const candidates = await prisma.candidate.findMany({
+  const candidates = await prisma.electionCandidate.findMany({
     where: {
       electionId: 3,
     },

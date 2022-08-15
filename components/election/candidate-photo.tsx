@@ -1,4 +1,4 @@
-import { Candidate } from "@prisma/client";
+import { ElectionCandidate } from "@prisma/client";
 import Image from "next/image";
 import MaterialThemed from "../material-themed";
 
@@ -8,7 +8,7 @@ const CandidatePhoto = ({
   size = 256,
   themed = true,
 }: {
-  candidate: Candidate;
+  candidate: ElectionCandidate;
   className?: string;
   size?: number;
   themed?: boolean;

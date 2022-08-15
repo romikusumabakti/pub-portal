@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 enum Gender {
@@ -79,14 +80,14 @@ model Generation {
 }
 
 model Student {
-  id            Int            @id @default(autoincrement())
-  person        Person         @relation(fields: [personId], references: [id])
-  personId      Int            @unique
+  id            Int                 @id @default(autoincrement())
+  person        Person              @relation(fields: [personId], references: [id])
+  personId      Int                 @unique
   nim           String?
-  generation    Generation     @relation(fields: [generationId], references: [id])
+  generation    Generation          @relation(fields: [generationId], references: [id])
   generationId  Int
   activeStudent ActiveStudent?
-  candidacies   Candidate[]
+  candidacies   ElectionCandidate[]
 }
 
 model ActiveStudent {
@@ -151,10 +152,11 @@ model Post {
 }
 
 model Election {
-  id         Int                @id @default(autoincrement())
+  id         Int                 @id @default(autoincrement())
   year       Int
-  candidates Candidate[]
-  schedule   ElectionSchedule[]
+  candidates ElectionCandidate[]
+  schedules  ElectionSchedule[]
+  ballots    ElectionBallot[]
 }
 
 model ElectionSchedule {
@@ -165,7 +167,14 @@ model ElectionSchedule {
   title      String
 }
 
-model Candidate {
+model ElectionBallot {
+  id         Int      @id @default(autoincrement())
+  election   Election @relation(fields: [electionId], references: [id])
+  electionId Int
+  token      String   @unique
+}
+
+model ElectionCandidate {
   id         Int      @id @default(autoincrement())
   election   Election @relation(fields: [electionId], references: [id])
   electionId Int
@@ -175,5 +184,7 @@ model Candidate {
   color      String
   name       String?
   photo      String?
+  vision     String?
+  mission    String[]
   votes      Int      @default(0)
 }
