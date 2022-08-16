@@ -37,8 +37,8 @@ const CandidateCard = ({ candidate }: { candidate: ElectionCandidate }) => {
   const { t } = useTranslation("common");
 
   return (
-    <ElectionLayout page={pages[2]}>
-      <MaterialThemed color={candidate.color || "#2196f3"}>
+    <ElectionLayout page={pages.candidates}>
+      <MaterialThemed color={candidate.color}>
         <div className="flex flex-1 gap-4 p-4 md:px-8 md:py-6 md:gap-8 rounded-3xl bg-surface1 text-primary">
           <CandidatePhoto
             candidate={candidate}

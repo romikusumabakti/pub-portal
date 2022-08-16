@@ -1,7 +1,7 @@
-import CandidateCard from "../../../components/election/candidate-card";
-import ElectionLayout, { pages } from "../../../components/election/layout";
+import CandidateCard from "../../components/election/candidate-card";
+import ElectionLayout, { pages } from "../../components/election/layout";
 import { ElectionCandidate } from "@prisma/client";
-import prisma from "../../../lib/prisma";
+import prisma from "../../lib/prisma";
 import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async () => {

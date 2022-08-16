@@ -8,14 +8,15 @@ import { useEffect, useRef } from "react";
 
 const MaterialThemed = ({
   children,
-  color,
+  color = "#2196f3",
 }: {
   children: any;
   color: string;
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   const { theme, systemTheme } = useTheme();
   const materialtheme = themeFromSourceColor(argbFromHex(color));
-  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let dark = false;
     if (theme === "system") {

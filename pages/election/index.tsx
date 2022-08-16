@@ -39,7 +39,7 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
   const { t } = useTranslation("common");
 
   return (
-    <ElectionLayout page={pages[0]}>
+    <ElectionLayout page={pages.home}>
       <Card>
         <div className="flex flex-wrap justify-between gap-4">
           <div className="flex flex-col gap-4">
@@ -58,7 +58,7 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
             </div>
             <p>Waktu tersisa sampai hari pemilihan:</p>
             <p>
-              <Countdown date={new Date(2022, 7, 17, 7)} renderer={renderer} />
+              <Countdown date={new Date(2022, 7, 17, 13)} renderer={renderer} />
             </p>
             <p className="font-bold">Rabu, 17 Agustus 2022</p>
           </div>
@@ -85,18 +85,21 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
         <p>Untuk mengikuti pemilu Anda harus:</p>
         <ul>
           <li>Sedang menjadi mahasiswa PUB aktif atau pembina PUB</li>
-          <li>Memiliki akun PUB Portal sebelum hari pemilihan</li>
         </ul>
       </Card>
       <Card>
         <h1 className="text-3xl">Mekanisme pemilihan</h1>
         <p>Pada hari pemilihan (Rabu, 17 Agustus 2022) Anda dipersilakan:</p>
         <ul>
-          <li>Datang ke TPS (ruang B31) pada waktu yang ditentukan:</li>
+          <li>
+            Datang ke TPS yang telah ditentukan sesuai dengan asramanya
+            masing-masing:
+          </li>
           <ul>
-            <li>Angkatan 16 dan 17: pukul 07.00 s.d. 08.00 WIB</li>
-            <li>Angkatan 18 dan 19: pukul 08.00 s.d. 09.00 WIB</li>
-            <li>Angkatan 20: pukul 09.00 s.d. 10.00 WIB</li>
+            <li>Aswan: 3B</li>
+            <li>Astra: B31</li>
+            <li>Asbar: 2E</li>
+            <li>Asri: 2D</li>
           </ul>
           <li>Tunggu pemanggilan dari panitia</li>
           <li>

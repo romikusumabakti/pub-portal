@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <div>{t("made-with-by")}</div>
+      <div>{t("part-of")}</div>
       <div>© 2022 Pemberdayaan Umat Berkelanjutan</div>
     </footer>
   );

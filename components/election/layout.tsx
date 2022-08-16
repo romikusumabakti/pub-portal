@@ -1,6 +1,5 @@
 import {
   MdAccountBox,
-  MdBarChart,
   MdDataUsage,
   MdEvent,
   MdHome,
@@ -11,54 +10,48 @@ import { Page } from "../drawer";
 import Layout from "../layout";
 import { apps } from "../right-bar";
 
-export const pages: Page[] = [
-  {
+export const pages: { [key: string]: Page } = {
+  home: {
     id: "home",
     title: "home",
     path: "/",
     icon: <MdHome />,
   },
-  {
-    id: "schedule",
-    title: "election:schedule",
-    path: "/schedule",
-    icon: <MdEvent />,
-  },
-  {
+  //schedule: {
+  //   id: "schedule",
+  //   title: "election:schedule",
+  //   path: "/schedule",
+  //   icon: <MdEvent />,
+  // },
+  candidates: {
     id: "candidates",
     title: "election:candidates",
     path: "/candidates",
     icon: <MdAccountBox />,
   },
-  {
+  voters: {
     id: "voters",
     title: "election:voters",
     path: "/voters",
     icon: <MdPeople />,
   },
-  {
+  simulation: {
     id: "simulation",
     title: "election:simulation",
     path: "/simulation",
     icon: <MdHowToVote />,
   },
-  {
-    id: "statistics",
-    title: "election:statistics",
-    path: "/statistics",
-    icon: <MdBarChart />,
-  },
-  {
+  result: {
     id: "result",
     title: "election:result",
     path: "/result",
     icon: <MdDataUsage />,
   },
-];
+};
 
 const ElectionLayout = ({ children, page }: { children: any; page: Page }) => {
   return (
-    <Layout app={apps.election} menu={pages} page={page}>
+    <Layout app={apps.election} menu={Object.values(pages)} page={page}>
       {children}
     </Layout>
   );

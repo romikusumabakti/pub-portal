@@ -10,7 +10,7 @@ const CandidateCard = ({ candidate }: { candidate: ElectionCandidate }) => {
   const { t } = useTranslation("common");
 
   return (
-    <MaterialThemed color={candidate.color || "#2196f3"}>
+    <MaterialThemed color={candidate.color}>
       <div className="flex flex-1 gap-4 p-4 md:px-8 md:py-6 md:gap-4 md:flex-col rounded-3xl bg-surface1 text-primary">
         <CandidatePhoto
           candidate={candidate}

@@ -1,5 +1,6 @@
 {
   "variable-example": "Using a variable {{count}}",
+  "part-of": "Part of the PUB Portal project",
   "made-with-by": "Made with ♥ by PUB Developers",
   "home": "Home",
   "more": "More",
