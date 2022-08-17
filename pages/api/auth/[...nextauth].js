@@ -13,7 +13,11 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-          return true;
+          if (user.id) {
+            return true;
+          } else {
+            return false;
+          }
         },
         async redirect({ url, baseUrl }) {
           return url;
@@ -26,6 +30,5 @@ export default NextAuth({
         },
       },
     }),
-    // ...add more providers here
   ],
 });

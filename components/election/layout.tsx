@@ -1,5 +1,8 @@
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import {
   MdAccountBox,
+  MdAdminPanelSettings,
   MdDataUsage,
   MdEvent,
   MdHome,
@@ -10,7 +13,7 @@ import { Page } from "../drawer";
 import Layout from "../layout";
 import { apps } from "../right-bar";
 
-export const pages: { [key: string]: Page } = {
+export let pages: { [key: string]: Page } = {
   home: {
     id: "home",
     title: "home",
@@ -50,6 +53,21 @@ export const pages: { [key: string]: Page } = {
 };
 
 const ElectionLayout = ({ children, page }: { children: any; page: Page }) => {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session?.user?.email === "romikusumab@gmail.com")
+      pages = {
+        ...pages,
+        admin: {
+          id: "admin",
+          title: "Dasbor admin",
+          path: "/admin_dashboard",
+          icon: <MdAdminPanelSettings />,
+        },
+      };
+  }, [session?.user?.email]);
+
   return (
     <Layout app={apps.election} menu={Object.values(pages)} page={page}>
       {children}

@@ -1,4 +1,4 @@
-import { ElectionCandidate } from "@prisma/client";
+import { ElectionCandidate, Prisma } from "@prisma/client";
 import { GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
@@ -19,6 +19,14 @@ export async function getStaticPaths() {
   };
 }
 
+const candidateWithStudent = Prisma.validator<Prisma.ElectionCandidateArgs>()({
+  include: { student: true },
+});
+
+type CandidateWithStudent = Prisma.ElectionCandidateGetPayload<
+  typeof candidateWithStudent
+>;
+
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   const candidate = await prisma.electionCandidate.findFirst({
     where: {
@@ -28,6 +36,13 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
         },
       },
       number: parseInt(params.number),
+    },
+    include: {
+      student: {
+        include: {
+          person: true,
+        },
+      },
     },
   });
   return { props: { candidate }, revalidate: 60 };

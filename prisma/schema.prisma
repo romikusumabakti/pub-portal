@@ -41,6 +41,7 @@ model Person {
   linkedin         String?
   student          Student?
   teachSchedules   CourseSchedule[]
+  electionVoters   ElectionVoter[]
 }
 
 model CampusRoom {
@@ -135,13 +136,6 @@ model StudentRegistration {
   name String
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  username String
-  password String
-  posts    Post[]
-}
-
 model Post {
   id        Int      @id @default(autoincrement())
   title     String
@@ -156,6 +150,7 @@ model Election {
   year       Int
   candidates ElectionCandidate[]
   schedules  ElectionSchedule[]
+  voters     ElectionVoter[]
   ballots    ElectionBallot[]
 }
 
@@ -167,18 +162,19 @@ model ElectionSchedule {
   title      String
 }
 
-model ElectionBallot {
+model ElectionVoter {
   id         Int      @id @default(autoincrement())
   election   Election @relation(fields: [electionId], references: [id])
   electionId Int
-  token      String   @unique
+  person     Person   @relation(fields: [personId], references: [id])
+  personId   Int
 }
 
 model ElectionCandidate {
-  id         Int      @id @default(autoincrement())
-  election   Election @relation(fields: [electionId], references: [id])
+  id         Int              @id @default(autoincrement())
+  election   Election         @relation(fields: [electionId], references: [id])
   electionId Int
-  student    Student  @relation(fields: [studentId], references: [id])
+  student    Student          @relation(fields: [studentId], references: [id])
   studentId  Int
   number     Int
   color      String
@@ -186,5 +182,63 @@ model ElectionCandidate {
   photo      String?
   vision     String?
   missions   String[]
-  votes      Int      @default(0)
+  ballots    ElectionBallot[]
+  votes      Int              @default(0)
+}
+
+model ElectionBallot {
+  id          Int               @id @default(autoincrement())
+  election    Election          @relation(fields: [electionId], references: [id])
+  electionId  Int
+  token       String            @unique
+  strength    Int               @default(1)
+  candidate   ElectionCandidate @relation(fields: [candidateId], references: [id])
+  candidateId Int
+  counted     Boolean           @default(false)
+}
+
+model Account {
+  id                Int     @id @default(autoincrement())
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  posts         Post[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

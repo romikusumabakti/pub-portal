@@ -126,14 +126,6 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
         </div>
       </Card>
       <Card>
-        <h1 className="text-3xl">Hitung cepat</h1>
-        <p>
-          Demi menjaga kerahasiaan pada saat pemilihan, jumlah suara tidak akan
-          diperbarui sampai ada setidaknya 2 suara baru untuk masing-masing
-          kandidat.
-        </p>
-      </Card>
-      <Card>
         <h1 className="text-3xl">Hasil pemilu</h1>
         <p>Hasil pemilu akan ditampilkan setelah pemilihan selesai.</p>
       </Card>
