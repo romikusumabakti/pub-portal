@@ -187,14 +187,14 @@ model ElectionCandidate {
 }
 
 model ElectionBallot {
-  id          Int               @id @default(autoincrement())
-  election    Election          @relation(fields: [electionId], references: [id])
+  id          Int                @id @default(autoincrement())
+  election    Election           @relation(fields: [electionId], references: [id])
   electionId  Int
-  token       String            @unique
-  strength    Int               @default(1)
-  candidate   ElectionCandidate @relation(fields: [candidateId], references: [id])
-  candidateId Int
-  counted     Boolean           @default(false)
+  token       String             @unique
+  strength    Int                @default(1)
+  candidate   ElectionCandidate? @relation(fields: [candidateId], references: [id])
+  candidateId Int?
+  counted     Boolean            @default(false)
 }
 
 model Account {

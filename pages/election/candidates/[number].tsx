@@ -1,4 +1,4 @@
-import { ElectionCandidate, Prisma } from "@prisma/client";
+import { ElectionCandidate } from "@prisma/client";
 import { GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
@@ -18,14 +18,6 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
-
-const candidateWithStudent = Prisma.validator<Prisma.ElectionCandidateArgs>()({
-  include: { student: true },
-});
-
-type CandidateWithStudent = Prisma.ElectionCandidateGetPayload<
-  typeof candidateWithStudent
->;
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   const candidate = await prisma.electionCandidate.findFirst({
