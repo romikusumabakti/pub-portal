@@ -2,9 +2,18 @@ import prisma from "../../../lib/prisma";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const ballot = await prisma.electionBallot.update({
+    const ballot = await prisma.electionBallot.findFirst({
       where: {
         counted: false,
+        NOT: {
+          candidateId: null,
+        },
+      },
+    });
+
+    await prisma.electionBallot.update({
+      where: {
+        id: ballot.id,
       },
       data: {
         counted: true,
@@ -16,7 +25,7 @@ export default async function handler(req, res) {
         id: ballot.candidateId,
       },
       data: {
-        votes: { increment: 1 },
+        votes: { increment: ballot.strength },
       },
     });
 
