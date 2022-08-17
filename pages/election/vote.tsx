@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { candidates }, revalidate: 60 };
 };
 
-function Confirm({ candidate, setCandidate, token, setBallot }: any) {
+function Confirm({ candidate, setCandidate, token, setBallot, setToken }: any) {
   return (
     <Transition show={candidate !== undefined} as={Fragment}>
       <Dialog onClose={() => setCandidate()}>
@@ -70,6 +70,7 @@ function Confirm({ candidate, setCandidate, token, setBallot }: any) {
                       .then((ballot) => {
                         setCandidate();
                         setBallot();
+                        setToken();
                       });
                   }}
                 >
@@ -112,6 +113,7 @@ const Candidates = ({ candidates }: { candidates: ElectionCandidate[] }) => {
             setCandidate={setCandidate}
             token={token}
             setBallot={setBallot}
+            setToken={setToken}
           />
           <Button className="self-center" onClick={() => setBallot(undefined)}>
             Batal memilih sekarang
@@ -119,6 +121,7 @@ const Candidates = ({ candidates }: { candidates: ElectionCandidate[] }) => {
         </div>
       ) : (
         <form
+          className="flex flex-col max-w-md gap-4"
           onSubmit={(e) => {
             e.preventDefault();
             fetch("/api/election/check_ballot", {
@@ -133,7 +136,7 @@ const Candidates = ({ candidates }: { candidates: ElectionCandidate[] }) => {
               .then((response) => response.json())
               .then((ballot) => {
                 if (ballot) {
-                  if (ballot.candidate) {
+                  if (ballot.candidateId) {
                     alert("Token sudah digunakan.");
                   } else {
                     setBallot(ballot);
@@ -149,6 +152,7 @@ const Candidates = ({ candidates }: { candidates: ElectionCandidate[] }) => {
             className="p-3 border"
             value={token}
             onChange={(e) => setToken(e.target.value)}
+            placeholder="Masukkan token di sini"
             required
           />
           <Button>Lakukan pemilihan</Button>
