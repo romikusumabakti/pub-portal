@@ -1,4 +1,4 @@
-import { ElectionCandidate } from "@prisma/client";
+import { ElectionCandidate, Person, Student } from "@prisma/client";
 import { GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
@@ -40,7 +40,15 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   return { props: { candidate }, revalidate: 60 };
 };
 
-const CandidateCard = ({ candidate }: { candidate: ElectionCandidate }) => {
+const CandidateCard = ({
+  candidate,
+}: {
+  candidate: ElectionCandidate & {
+    student: Student & {
+      person: Person;
+    };
+  };
+}) => {
   const { t } = useTranslation("common");
 
   return (
@@ -60,7 +68,7 @@ const CandidateCard = ({ candidate }: { candidate: ElectionCandidate }) => {
                 width={24}
                 height={24}
               />
-              <div>{candidate.name}</div>
+              <div>{candidate.student.person.name}</div>
             </div>
             <h1 className="text-3xl">Visi</h1>
             <p>{candidate.vision}</p>

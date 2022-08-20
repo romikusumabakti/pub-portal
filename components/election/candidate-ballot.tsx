@@ -2,6 +2,7 @@ import { ElectionCandidate } from "@prisma/client";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
+import { MouseEventHandler } from "react";
 import Button from "../button";
 import MaterialThemed from "../material-themed";
 import CandidatePhoto from "./candidate-photo";
@@ -11,7 +12,7 @@ const CandidateBallot = ({
   onClick,
 }: {
   candidate: ElectionCandidate;
-  onClick: any;
+  onClick: MouseEventHandler<Element>;
 }) => {
   const { t } = useTranslation("common");
 

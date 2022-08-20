@@ -8,7 +8,9 @@ const Result = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("/api/election/count")
+      fetch("/api/election/count", {
+        method: "POST",
+      })
         .then((response) => response.json())
         .then((candidate) => console.log(candidate));
 

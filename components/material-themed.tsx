@@ -11,7 +11,7 @@ const MaterialThemed = ({
   color = "#2196f3",
 }: {
   children: any;
-  color: string;
+  color?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 

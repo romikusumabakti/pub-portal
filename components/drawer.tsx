@@ -19,7 +19,7 @@ const Drawer = ({
   buttons = [],
 }: {
   open: boolean;
-  handleOpen: MouseEventHandler;
+  handleOpen: MouseEventHandler<Element>;
   app: App;
   page: Page;
   buttons: Page[];

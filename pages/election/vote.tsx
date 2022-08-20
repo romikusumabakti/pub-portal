@@ -1,11 +1,17 @@
 import CandidateBallot from "../../components/election/candidate-ballot";
 import ElectionLayout, { pages } from "../../components/election/layout";
-import { ElectionBallot, ElectionCandidate } from "@prisma/client";
+import {
+  ElectionBallot,
+  ElectionCandidate,
+  Person,
+  Student,
+} from "@prisma/client";
 import prisma from "../../lib/prisma";
 import { GetStaticProps } from "next";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Button from "../../components/button";
+import Scrim from "../../components/scrim";
 
 export const getStaticProps: GetStaticProps = async () => {
   const candidates = await prisma.electionCandidate.findMany({
@@ -16,25 +22,25 @@ export const getStaticProps: GetStaticProps = async () => {
         },
       },
     },
+    include: {
+      student: {
+        include: {
+          person: true,
+        },
+      },
+    },
+    orderBy: {
+      number: "asc",
+    },
   });
   return { props: { candidates }, revalidate: 60 };
 };
 
-function Confirm({ candidate, setCandidate, token, setBallot, setToken }: any) {
+function Confirm({ show, title, description, onOK, onCancel }: any) {
   return (
-    <Transition show={candidate !== undefined} as={Fragment}>
-      <Dialog onClose={() => setCandidate()}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/30" />
-        </Transition.Child>
+    <Transition show={show} as={Fragment}>
+      <Dialog onClose={onCancel}>
+        <Scrim />
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -44,39 +50,13 @@ function Confirm({ candidate, setCandidate, token, setBallot, setToken }: any) {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <div className="fixed inset-0 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-20 flex items-center justify-center p-4">
             <Dialog.Panel className="flex flex-col w-full max-w-sm gap-2 p-4 bg-white rounded">
-              <Dialog.Title className="text-xl">
-                Pilih 0{candidate?.number} {candidate?.name}
-              </Dialog.Title>
-              <Dialog.Description>
-                Apakah Anda yakin ingin memilih 0{candidate?.number}{" "}
-                {candidate?.name} sebagai ketua PUB berikutnya?
-              </Dialog.Description>
+              <Dialog.Title className="text-xl">{title}</Dialog.Title>
+              <Dialog.Description>{description}</Dialog.Description>
               <div className="flex justify-between">
-                <Button
-                  onClick={() => {
-                    fetch("/api/election/vote", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        token,
-                        candidateId: candidate.id,
-                      }),
-                    })
-                      .then((response) => response.json())
-                      .then((ballot) => {
-                        setCandidate();
-                        setBallot();
-                        setToken();
-                      });
-                  }}
-                >
-                  Pilih
-                </Button>
-                <Button variant="tonal" onClick={() => setCandidate()}>
+                <Button onClick={onOK}>Pilih</Button>
+                <Button variant="tonal" onClick={onCancel}>
                   Batal
                 </Button>
               </div>
@@ -88,10 +68,24 @@ function Confirm({ candidate, setCandidate, token, setBallot, setToken }: any) {
   );
 }
 
-const Candidates = ({ candidates }: { candidates: ElectionCandidate[] }) => {
+const Candidates = ({
+  candidates,
+}: {
+  candidates: (ElectionCandidate & {
+    student: Student & {
+      person: Person;
+    };
+  })[];
+}) => {
   const [token, setToken] = useState<string>();
   const [ballot, setBallot] = useState<ElectionBallot>();
-  const [candidate, setCandidate] = useState<ElectionCandidate>();
+  const [candidate, setCandidate] = useState<
+    ElectionCandidate & {
+      student: Student & {
+        person: Person;
+      };
+    }
+  >();
 
   return (
     <ElectionLayout page={pages.candidates}>
@@ -109,13 +103,40 @@ const Candidates = ({ candidates }: { candidates: ElectionCandidate[] }) => {
             ))}
           </div>
           <Confirm
-            candidate={candidate}
-            setCandidate={setCandidate}
-            token={token}
-            setBallot={setBallot}
-            setToken={setToken}
+            show={candidate !== undefined}
+            title={`Pilih 0${candidate?.number} ${candidate?.name}`}
+            description={`Apakah Anda yakin ingin memilih 0${candidate?.number} ${candidate?.student.person.name} sebagai ketua PUB berikutnya?`}
+            onOK={() => {
+              fetch("/api/election/vote", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  token,
+                  candidateId: candidate?.id,
+                }),
+              })
+                .then((response) => response.json())
+                .then(() => {
+                  setCandidate(undefined);
+                  setBallot(undefined);
+                  setToken(undefined);
+                });
+            }}
+            onCancel={() => {
+              setCandidate(undefined);
+            }}
           />
-          <Button className="self-center" onClick={() => setBallot(undefined)}>
+          <Button
+            variant="tonal"
+            className="self-center"
+            onClick={() => {
+              setCandidate(undefined);
+              setBallot(undefined);
+              setToken(undefined);
+            }}
+          >
             Batal memilih sekarang
           </Button>
         </div>

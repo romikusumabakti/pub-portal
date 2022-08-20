@@ -16,7 +16,7 @@ const Button = ({
   className?: string;
   variant?: string;
   size?: string;
-  onClick?: MouseEventHandler;
+  onClick?: MouseEventHandler<Element>;
 }) => {
   const variants: Record<string, VariantStyle> = {
     filled: {

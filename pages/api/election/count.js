@@ -4,31 +4,33 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const ballot = await prisma.electionBallot.findFirst({
       where: {
-        counted: false,
         NOT: {
-          candidateId: null,
+          candidate: null,
         },
+        counted: false,
       },
     });
 
-    await prisma.electionBallot.update({
-      where: {
-        id: ballot.id,
-      },
-      data: {
-        counted: true,
-      },
-    });
+    if (ballot) {
+      await prisma.electionBallot.update({
+        where: {
+          id: ballot.id,
+        },
+        data: {
+          counted: true,
+        },
+      });
 
-    const candidate = await prisma.electionCandidate.update({
-      where: {
-        id: ballot.candidateId,
-      },
-      data: {
-        votes: { increment: ballot.strength },
-      },
-    });
+      const candidate = await prisma.electionCandidate.update({
+        where: {
+          id: ballot.candidateId,
+        },
+        data: {
+          votes: { increment: ballot.strength },
+        },
+      });
 
-    res.status(200).json(candidate);
+      res.status(200).json(candidate);
+    }
   }
 }

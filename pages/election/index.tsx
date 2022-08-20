@@ -11,6 +11,22 @@ import Link from "next/link";
 import Trans from "next-translate/Trans";
 import { MdHowToVote } from "react-icons/md";
 
+export const getStaticProps: GetStaticProps = async () => {
+  const candidates = await prisma.electionCandidate.findMany({
+    where: {
+      election: {
+        is: {
+          year: 2022,
+        },
+      },
+    },
+    orderBy: {
+      number: "asc",
+    },
+  });
+  return { props: { candidates }, revalidate: 60 };
+};
+
 const renderer = ({
   days,
   hours,
@@ -131,15 +147,6 @@ const Home = ({ candidates }: { candidates: ElectionCandidate[] }) => {
       </Card>
     </ElectionLayout>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const candidates = await prisma.electionCandidate.findMany({
-    where: {
-      electionId: 3,
-    },
-  });
-  return { props: { candidates }, revalidate: 60 };
 };
 
 export default Home;

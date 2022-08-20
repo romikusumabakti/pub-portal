@@ -62,7 +62,7 @@ const ElectionLayout = ({ children, page }: { children: any; page: Page }) => {
         admin: {
           id: "admin",
           title: "Dasbor admin",
-          path: "/admin_dashboard",
+          path: "/admin",
           icon: <MdAdminPanelSettings />,
         },
       };

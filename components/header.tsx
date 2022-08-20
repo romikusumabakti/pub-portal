@@ -10,7 +10,7 @@ const Header = ({
   appId,
   title,
 }: {
-  handleOpenDrawer?: MouseEventHandler;
+  handleOpenDrawer?: MouseEventHandler<Element>;
   appId: string;
   title: string;
 }) => {
