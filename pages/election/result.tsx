@@ -1,7 +1,7 @@
 import { ElectionBallot, ElectionCandidate } from "@prisma/client";
 import { GetStaticProps } from "next";
-import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import useSWR, { Fetcher } from "swr";
 import Card from "../../components/card";
 import ElectionLayout, { pages } from "../../components/election/layout";
 import prisma from "../../lib/prisma";
@@ -32,6 +32,9 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { ballots }, revalidate: 60 };
 };
 
+const fetcher: Fetcher<ElectionCandidate[], string> = (...args) =>
+  fetch(...args).then((res) => res.json());
+
 const Result = ({
   ballots,
 }: {
@@ -42,23 +45,18 @@ const Result = ({
     } | null;
   })[];
 }) => {
-  const [candidates, setCandidates] = useState<ElectionCandidate[]>([]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetch("/api/election/candidates")
-        .then((response) => response.json())
-        .then((candidates) => setCandidates(candidates));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const { data } = useSWR<ElectionCandidate[]>(
+    "/api/election/candidates",
+    fetcher,
+    { refreshInterval: 5000, fallbackData: [] }
+  );
 
   return (
     <ElectionLayout page={pages.result}>
       <ResponsiveContainer width="100%" height={256}>
         <PieChart width={256} height={256}>
           <Pie
-            data={candidates.map((candidate) => ({
+            data={data!.map((candidate) => ({
               name: `0${candidate.number} ${candidate.name} (${candidate.votes} suara)`,
               value: candidate.votes,
             }))}
@@ -66,7 +64,7 @@ const Result = ({
             label={(entry) => entry.name}
             dataKey="value"
           >
-            {candidates.map((candidate) => (
+            {data!.map((candidate) => (
               <Cell key={candidate.number} fill={candidate.color} />
             ))}
           </Pie>
@@ -75,7 +73,7 @@ const Result = ({
       <table>
         <thead>
           <tr>
-            {candidates.map((candidate) => (
+            {data!.map((candidate) => (
               <th
                 key={candidate.number}
               >{`0${candidate.number} ${candidate.name} (${candidate.votes} suara)`}</th>
