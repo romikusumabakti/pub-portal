@@ -117,6 +117,18 @@ h6 {
   ul > ul > li {
     padding-block: unset;
   }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding-inline: 12px;
+    height: 36px;
+    border: 1px solid;
+    @apply border-surface-variant;
+  }
 }
 
 /* a {

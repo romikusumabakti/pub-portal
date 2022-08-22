@@ -3,9 +3,13 @@ import { GetStaticProps } from "next";
 import prisma from "../../lib/prisma";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const ballots = await prisma.electionCandidate.findMany({
+  const ballots = await prisma.electionBallot.findMany({
     where: {
-      electionId: 3,
+      election: {
+        is: {
+          year: 2022,
+        },
+      },
     },
   });
   return { props: { ballots }, revalidate: 60 };
