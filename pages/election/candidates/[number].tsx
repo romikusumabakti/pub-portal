@@ -1,5 +1,5 @@
 import { ElectionCandidate, Person, Student } from "@prisma/client";
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Button from "../../../components/button";
@@ -8,16 +8,26 @@ import ElectionLayout, { pages } from "../../../components/election/layout";
 import MaterialThemed from "../../../components/material-themed";
 import prisma from "../../../lib/prisma";
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const candidates = await prisma.electionCandidate.findMany({
+    where: {
+      election: {
+        is: {
+          year: 2022,
+        },
+      },
+    },
+    select: {
+      number: true,
+    },
+  });
   return {
-    paths: [
-      { params: { number: "1" } },
-      { params: { number: "2" } },
-      { params: { number: "3" } },
-    ],
-    fallback: false,
+    paths: candidates.map((candidate) => ({
+      params: { number: candidate.number.toString() },
+    })),
+    fallback: "blocking",
   };
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   const candidate = await prisma.electionCandidate.findFirst({
