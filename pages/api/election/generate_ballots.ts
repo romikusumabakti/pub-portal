@@ -1,6 +1,10 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "POST") {
     const voters = await prisma.person.findMany({
       where: {
@@ -21,7 +25,7 @@ export default async function handler(req, res) {
     });
 
     const ballots = voters.map(() => ({
-      electionId: election.id,
+      electionId: election!.id,
       token: Math.random().toString(16).slice(2, 10),
     }));
 
