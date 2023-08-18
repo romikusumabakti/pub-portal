@@ -27,7 +27,7 @@ const Layout = ({
           {t(page.title)} - {t(`${app.id}:title`)}
         </title>
         <meta name="description" content="Pemilihan ketua PUB" />
-        <link rel="icon" href="/favicon/election.ico" />
+        <link rel="icon" href="/favicon/elections.ico" />
       </Head>
       <div className="flex h-screen bg-surface lg:bg-surface1">
         <Drawer
@@ -40,7 +40,7 @@ const Layout = ({
         <div className="flex flex-col flex-1 min-h-0">
           <Header
             handleOpenDrawer={() => setOpenDrawer((prev) => !prev)}
-            appId="election"
+            appId="elections"
             title={page.title}
           />
           <main className="flex flex-col flex-1 gap-4 p-4 overflow-auto lg:bg-surface lg:rounded-tl-2xl lg:gap-6 lg:px-8 lg:py-6">

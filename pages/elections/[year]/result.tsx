@@ -1,17 +1,32 @@
 import { ElectionBallot, ElectionCandidate } from "@prisma/client";
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import useSWR, { Fetcher } from "swr";
-import Card from "../../components/card";
-import ElectionLayout, { pages } from "../../components/election/layout";
-import prisma from "../../lib/prisma";
+import Card from "../../../components/card";
+import ElectionLayout, { pages } from "../../../components/elections/layout";
+import prisma from "../../../lib/prisma";
+import { IParams } from ".";
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const elections = await prisma.election.findMany();
+  const paths = elections.map((election) => ({
+    params: {
+      year: election.year.toString(),
+    },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { year } = context.params as IParams;
   const ballotsWithToken = await prisma.electionBallot.findMany({
     where: {
       election: {
         is: {
-          year: 2022,
+          year: parseInt(year),
         },
       },
       counted: true,
@@ -29,15 +44,17 @@ export const getStaticProps: GetStaticProps = async () => {
     ...ballot,
     token: `${ballot.token.slice(0, 2)}****${ballot.token.slice(-2)}`,
   }));
-  return { props: { ballots }, revalidate: 60 };
+  return { props: { year: parseInt(year), ballots }, revalidate: 60 };
 };
 
 const fetcher: Fetcher<ElectionCandidate[], string> = (...args) =>
   fetch(...args).then((res) => res.json());
 
 const Result = ({
+  year,
   ballots,
 }: {
+  year: number;
   ballots: (ElectionBallot & {
     candidate: {
       number: number;
@@ -46,13 +63,13 @@ const Result = ({
   })[];
 }) => {
   const { data } = useSWR<ElectionCandidate[]>(
-    "/api/election/candidates",
+    `/api/elections/${year}/candidates`,
     fetcher,
     { refreshInterval: 5000, fallbackData: [] }
   );
 
   return (
-    <ElectionLayout page={pages.result}>
+    <ElectionLayout year={year} page={pages.result}>
       <ResponsiveContainer width="100%" height={256}>
         <PieChart width={256} height={256}>
           <Pie

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer>
       <div>{t("part-of")}</div>
-      <div>© 2022 Pemberdayaan Umat Berkelanjutan</div>
+      <div>© 2023 Pemberdayaan Umat Berkelanjutan</div>
     </footer>
   );
 };

@@ -10,7 +10,7 @@ module.exports = {
   },
   plugins: [
     require("m3-tokens/tailwind")({
-      source: "#6750a4",
+      source: "#4452ff",
     }),
   ],
   darkMode: "class",

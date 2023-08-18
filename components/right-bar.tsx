@@ -42,10 +42,10 @@ export const apps: Record<string, App> = {
     path: "/activity",
   },
   books: {
-    id: "books",
+    id: "camp",
     icon: MdBook,
-    title: "Buku",
-    path: "/books",
+    title: "Camp",
+    path: "/camp",
   },
   forum: {
     id: "forum",
@@ -65,11 +65,11 @@ export const apps: Record<string, App> = {
     title: "Wiki",
     path: "/wiki",
   },
-  election: {
-    id: "election",
+  elections: {
+    id: "elections",
     icon: MdHowToVote,
     title: "Pemilu",
-    path: "/election",
+    path: "/elections",
   },
   "borland-x": {
     id: "borland-x",
@@ -101,8 +101,8 @@ const buttons = [
     icon: apps.wiki.icon,
   },
   {
-    app: apps.election,
-    icon: apps.election.icon,
+    app: apps.elections,
+    icon: apps.elections.icon,
   },
   {
     app: apps["borland-x"],
@@ -128,17 +128,17 @@ const RightBar = ({ activeAppId }: { activeAppId: string }) => {
             {buttons.map((button) => {
               const Icon = button.icon;
               return (
-                <Link key={button.app.id} href={button.app.path}>
-                  <a
-                    className={`flex flex-col items-center justify-center flex-1 w-20 h-20 gap-2 cursor-pointer rounded-2xl ${
-                      button.app.id === activeAppId
-                        ? "bg-secondary-container text-on-secondary-container"
-                        : "hover:bg-on-surface hover:bg-opacity-5"
-                    }`}
-                  >
-                    <Icon className="text-2xl" />
-                    <div className="text-sm">{button.app.title}</div>
-                  </a>
+                <Link
+                  key={button.app.id}
+                  href={button.app.path}
+                  className={`flex flex-col items-center justify-center flex-1 w-20 h-20 gap-2 cursor-pointer rounded-2xl ${
+                    button.app.id === activeAppId
+                      ? "bg-secondary-container text-on-secondary-container"
+                      : "hover:bg-on-surface hover:bg-opacity-5"
+                  }`}
+                >
+                  <Icon className="text-2xl" />
+                  <div className="text-sm">{button.app.title}</div>
                 </Link>
               );
             })}
@@ -154,7 +154,7 @@ const RightBar = ({ activeAppId }: { activeAppId: string }) => {
             width={32}
             height={32}
             layout="fixed"
-            className="w-6 h-6 rounded-full"
+            className="rounded-full"
           />
         </IconButton>
       ) : (

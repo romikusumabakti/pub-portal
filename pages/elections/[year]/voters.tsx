@@ -1,15 +1,30 @@
 import { ElectionVoter, Generation, Person, Student } from "@prisma/client";
-import { GetStaticProps } from "next";
-import Card from "../../components/card";
-import ElectionLayout, { pages } from "../../components/election/layout";
-import prisma from "../../lib/prisma";
+import { GetStaticPaths, GetStaticProps } from "next";
+import Card from "../../../components/card";
+import ElectionLayout, { pages } from "../../../components/elections/layout";
+import prisma from "../../../lib/prisma";
+import { IParams } from ".";
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const elections = await prisma.election.findMany();
+  const paths = elections.map((election) => ({
+    params: {
+      year: election.year.toString(),
+    },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { year } = context.params as IParams;
   const voters = await prisma.electionVoter.findMany({
     where: {
       election: {
         is: {
-          year: 2022,
+          year: parseInt(year),
         },
       },
     },
@@ -25,12 +40,14 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     },
   });
-  return { props: { voters }, revalidate: 60 };
+  return { props: { year: parseInt(year), voters }, revalidate: 60 };
 };
 
 const Voters = ({
+  year,
   voters,
 }: {
+  year: number;
   voters: (ElectionVoter & {
     person: Person & {
       student:
@@ -42,7 +59,7 @@ const Voters = ({
   })[];
 }) => {
   return (
-    <ElectionLayout page={pages.voters}>
+    <ElectionLayout year={year} page={pages.voters}>
       <Card>
         <h1 className="text-3xl display">Daftar pemilih tetap</h1>
         <table>

@@ -1,13 +1,14 @@
 # PUB Portal (portal.pubpasim.org)
 
-PUB integrated management information system for committe, students, and alumni. Built with carefully crafted UI based on [Material Design 3 (Material You) guidelines](https://m3.material.io/).
+PUB Portal is an integrated management information system for PUB committe, students, and alumni. Built with carefully crafted UI based on [Material Design 3 (Material You) guidelines](https://m3.material.io/).
 
-PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to continue their studies (at Universitas Nasional PASIM, Bandung, Indonesia) and learn programming.
+PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opportunities for high school graduates to continue their studies (at Universitas Nasional PASIM, Bandung, Indonesia), learn to code, and become full-stack developers.
 
 ## Apps
-- [x] [PUB Election](https://portal.pubpasim.org/election) (almost complete)
+
+- [x] [PUB Election](https://portal.pubpasim.org/elections) (almost complete)
 - [x] [Borland X](https://github.com/romikusumabakti/borland-x) (alpha)
-- [ ] [PUB Books](https://portal.pubpasim.org/books) (in progress)
+- [ ] [PUB Camp](https://portal.pubpasim.org/camp) (in progress)
 - [ ] PUB Wiki (planned)
 - [ ] PUB Activity (planned)
 - [ ] PUB Blog (planned)
@@ -15,6 +16,7 @@ PUB (Pemberdayaan Umat Berkelanjutan) is a scholarship program that provides opp
 - [ ] PUB Forum (planned)
 
 ## Languages
+
 - [x] Bahasa Indonesia (available)
 - [ ] English (in progress)
 - [ ] العربية (planned)

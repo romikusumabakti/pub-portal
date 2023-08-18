@@ -3,7 +3,7 @@ import {
   greenFromArgb,
   redFromArgb,
   Theme,
-} from "@material/material-color-utilities/dist";
+} from "@material/material-color-utilities";
 
 export function applyTheme(
   theme: Theme,

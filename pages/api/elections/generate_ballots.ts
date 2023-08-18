@@ -6,21 +6,19 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const voters = await prisma.person.findMany({
+    const election = await prisma.election.findFirst({
       where: {
-        student: {
-          is: {
-            generation: {
-              number: 18,
-            },
-          },
-        },
+        year: 2023,
       },
     });
 
-    const election = await prisma.election.findFirst({
+    const voters = await prisma.person.findMany({
       where: {
-        year: 2022,
+        electionVoters: {
+          some: {
+            electionId: election?.id,
+          },
+        },
       },
     });
 

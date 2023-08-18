@@ -3,7 +3,7 @@
   "defaultLocale": "id",
   "pages": {
     "*": ["common", "portal"],
-    "rgx:^/election(/.*)?$": ["election"],
+    "rgx:^/elections(/.*)?$": ["elections"],
     "rgx:^/books(/.*)?$": ["books"]
   }
 }

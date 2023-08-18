@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import {
   MdAccountBox,
   MdAdminPanelSettings,
@@ -22,54 +21,67 @@ export let pages: { [key: string]: Page } = {
   },
   //schedule: {
   //   id: "schedule",
-  //   title: "election:schedule",
+  //   title: "elections:schedule",
   //   path: "/schedule",
   //   icon: <MdEvent />,
   // },
   candidates: {
     id: "candidates",
-    title: "election:candidates",
+    title: "elections:candidates",
     path: "/candidates",
     icon: <MdAccountBox />,
   },
   voters: {
     id: "voters",
-    title: "election:voters",
+    title: "elections:voters",
     path: "/voters",
     icon: <MdPeople />,
   },
   simulation: {
     id: "simulation",
-    title: "election:simulation",
+    title: "elections:simulation",
     path: "/simulation",
     icon: <MdHowToVote />,
   },
   result: {
     id: "result",
-    title: "election:result",
+    title: "elections:result",
     path: "/result",
     icon: <MdDataUsage />,
   },
 };
 
-const ElectionLayout = ({ children, page }: { children: any; page: Page }) => {
+const ElectionLayout = ({
+  children,
+  year,
+  page,
+}: {
+  children: any;
+  year: number;
+  page: Page;
+}) => {
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (session?.user?.email === "romikusumab@gmail.com")
-      pages = {
-        ...pages,
-        admin: {
-          id: "admin",
-          title: "Dasbor admin",
-          path: "/admin",
-          icon: <MdAdminPanelSettings />,
-        },
-      };
-  }, [session?.user?.email]);
+  if (session?.user?.email === "romikusumab@gmail.com")
+    pages = {
+      ...pages,
+      admin: {
+        id: "admin",
+        title: "Dasbor admin",
+        path: "/admin",
+        icon: <MdAdminPanelSettings />,
+      },
+    };
 
   return (
-    <Layout app={apps.election} menu={Object.values(pages)} page={page}>
+    <Layout
+      app={{ ...apps.elections, title: `${apps.elections} ${year}` }}
+      menu={Object.values(pages).map((page) => ({
+        ...page,
+        path: `/${year}${page.path}`,
+      }))}
+      page={page}
+    >
       {children}
     </Layout>
   );

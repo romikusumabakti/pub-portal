@@ -1,7 +1,7 @@
 import {
   argbFromHex,
   themeFromSourceColor,
-} from "@material/material-color-utilities/dist";
+} from "@material/material-color-utilities";
 import { applyTheme } from "../lib/theme";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";

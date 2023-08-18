@@ -26,12 +26,12 @@ const CandidateBallot = ({
         />
         <div className="flex flex-col flex-1 gap-4">
           <div className="flex items-center flex-1 gap-4 text-xl font-bold display">
-            <Image
+            {/* <Image
               src="/images/generation-icons/20.svg"
               alt="PUB 20 Integer icon"
               width={24}
               height={24}
-            />
+            /> */}
             <div>{candidate.name}</div>
           </div>
           <div className="flex justify-center">

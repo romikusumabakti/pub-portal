@@ -1,28 +1,49 @@
 import { ElectionCandidate } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import ElectionLayout, { pages } from "../../components/election/layout";
+import ElectionLayout, { pages } from "../../../components/elections/layout";
+import { GetStaticPaths, GetStaticProps } from "next";
+import prisma from "../../../lib/prisma";
+import { IParams } from ".";
 
-const Result = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const elections = await prisma.election.findMany();
+  const paths = elections.map((election) => ({
+    params: {
+      year: election.year.toString(),
+    },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { year } = context.params as IParams;
+  return { props: { year: parseInt(year) }, revalidate: 60 };
+};
+
+const Result = ({ year }: { year: number }) => {
   const [candidates, setCandidates] = useState<ElectionCandidate[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("/api/election/count", {
+      fetch(`/api/elections/${year}/count`, {
         method: "POST",
       })
         .then((response) => response.json())
         .then((candidate) => console.log(candidate));
 
-      fetch("/api/election/candidates")
+      fetch(`/api/elections/${year}/candidates`)
         .then((response) => response.json())
         .then((candidates) => setCandidates(candidates));
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [year]);
 
   return (
-    <ElectionLayout page={pages.result}>
+    <ElectionLayout year={year} page={pages.result}>
       <ResponsiveContainer width="100%" height={256}>
         <PieChart width={256} height={256}>
           <Pie

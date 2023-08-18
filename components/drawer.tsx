@@ -43,9 +43,9 @@ const Drawer = ({
         <AppLogo app={app} />
         <nav className="flex flex-col">
           {buttons.map((button) => (
-            <Link key={button.path} href={`/election${button.path}`}>
+            <Link key={button.path} href={`/elections${button.path}`}>
               <button
-                className={`pl-4 pr-6 font-medium h-14 rounded-full flex gap-3 items-center ${
+                className={`pl-4 pr-6 w-full font-medium h-14 rounded-full flex gap-3 items-center ${
                   button.id === page.id
                     ? "bg-secondary-container text-on-secondary-container"
                     : "hover:bg-on-surface hover:bg-opacity-5"

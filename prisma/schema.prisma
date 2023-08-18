@@ -147,8 +147,9 @@ model Post {
 
 model Election {
   id         Int                 @id @default(autoincrement())
-  year       Int
-  apiKey     String              @default(uuid())
+  year       Int                 @unique
+  date       DateTime            @default(now())
+  // apiKey     String              @default(uuid())
   candidates ElectionCandidate[]
   schedules  ElectionSchedule[]
   voters     ElectionVoter[]
