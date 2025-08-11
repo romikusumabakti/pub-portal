@@ -11,14 +11,20 @@ import Link from "next/link";
 import Trans from "next-translate/Trans";
 import { MdHowToVote } from "react-icons/md";
 import { ParsedUrlQuery } from "querystring";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Candidates from "./vote";
+import dynamic from "next/dynamic";
+
+const OutlinedTextField = dynamic(
+  () => import("@w3h/react-material").then((mod) => mod.OutlinedTextField),
+  { ssr: false }
+);
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title.toString(),
     },
   }));
   return {
@@ -28,13 +34,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export interface IParams extends ParsedUrlQuery {
-  year: string;
+  title: string;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const elections = await prisma.election.findMany({
+    select: { id: true, title: true },
+    orderBy: { date: "desc" },
+  });
+  const { title } = context.params as IParams;
   const election = await prisma.election.findUnique({
-    where: { year: parseInt(year) },
+    where: { title },
   });
   const candidates = await prisma.electionCandidate.findMany({
     where: {
@@ -53,6 +63,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   });
   return {
     props: {
+      elections,
       election: { ...election, date: election?.date.getTime() },
       candidates,
     },
@@ -74,20 +85,28 @@ const renderer = ({
   completed: boolean;
 }) => {
   if (completed) {
-    return <p>Pemilihan telah dimulai.</p>;
+    return <p>Pemilihan telah selesai.</p>;
   } else {
     return (
-      <span className="text-xl">
-        {days} hari, {hours} jam, {minutes} menit, {seconds} detik
-      </span>
+      <>
+        <p>Waktu tersisa sampai hari pemilihan:</p>
+        <span className="text-xl">
+          {days} hari, {hours} jam, {minutes} menit, {seconds} detik
+        </span>
+      </>
     );
   }
 };
 
 const Home = ({
+  elections,
   election,
   candidates,
 }: {
+  elections: {
+    id: number;
+    title: number;
+  }[];
   election: Election;
   candidates: (ElectionCandidate & {
     student: Student & {
@@ -96,6 +115,7 @@ const Home = ({
   })[];
 }) => {
   const { t } = useTranslation("common");
+  const today = new Date();
   const electionDate = new Date(election.date);
   const formattedElectionDate = electionDate.toLocaleDateString("id-ID", {
     weekday: "long",
@@ -111,7 +131,20 @@ const Home = ({
   }, []);
 
   return (
-    <ElectionLayout year={election.year} page={pages.home}>
+    <ElectionLayout title={election.title} page={pages.home}>
+      <div className="flex gap-2">
+        {elections.map((e) => (
+          <Link
+            key={e.id}
+            href={`/elections/${e.title}`}
+            className={`${e.id === election.id && "pointer-events-none"}`}
+          >
+            <Button variant={e.id === election.id ? "filled" : "tonal"}>
+              {e.title}
+            </Button>
+          </Link>
+        ))}
+      </div>
       {tps ? (
         <Candidates
           candidates={candidates}
@@ -122,32 +155,41 @@ const Home = ({
         />
       ) : (
         <>
-          <Card>
-            <form
-              className="flex gap-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (code === "kpupub") {
-                  const tps = "B31";
-                  localStorage.setItem("tps", tps);
-                  setTps(tps);
-                } else {
-                  alert("Kode TPS tidak valid.");
-                }
-              }}
-            >
-              <input
-                type="password"
-                className="p-3 border"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Masukkan kode TPS di sini"
-                required
-                autoFocus
-              />
-              <Button>Verifikasi komputer</Button>
-            </form>
-          </Card>
+          {today.getFullYear() === electionDate.getFullYear() &&
+            today.getMonth() === electionDate.getMonth() &&
+            today.getDate() === electionDate.getDate() && (
+              <Card>
+                <h1 className="text-3xl">Verifikasi komputer bilik suara</h1>
+                <form
+                  className="flex gap-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (code === "kpupub") {
+                      const tps = "B31";
+                      localStorage.setItem("tps", tps);
+                      setTps(tps);
+                    } else {
+                      alert("Kode TPS tidak valid.");
+                    }
+                  }}
+                >
+                  <OutlinedTextField
+                    type="password"
+                    label="Kode TPS"
+                    value={code}
+                    onChange={(e) =>
+                      setCode(
+                        (e as unknown as ChangeEvent<HTMLInputElement>).target
+                          .value
+                      )
+                    }
+                    required
+                    error={false}
+                  />
+                  <Button>Verifikasi</Button>
+                </form>
+              </Card>
+            )}
           <Card>
             <div className="flex flex-wrap justify-between gap-4">
               <div className="flex flex-col gap-4">
@@ -161,19 +203,19 @@ const Home = ({
                         <span key={1} />,
                       ]}
                     />{" "}
-                    <span>{election.year}</span>
+                    <span>{election.title}</span>
                   </h1>
                 </div>
-                <p>Waktu tersisa sampai hari pemilihan:</p>
-                <p>
-                  <Countdown date={electionDate} renderer={renderer} />
-                </p>
+                {election.cabinetName && (
+                  <h2 className="text-xl">Kabinet {election.cabinetName}</h2>
+                )}
+                <Countdown date={electionDate} renderer={renderer} />
                 <p className="font-bold">{formattedElectionDate}</p>
               </div>
               <div className="flex gap-4">
                 {candidates.map((candidate) => (
                   <CandidatePhoto
-                    key={candidate.id}
+                    key={candidate.number}
                     candidate={candidate}
                     className="text-xs md:text-sm"
                     size={128}
@@ -182,10 +224,18 @@ const Home = ({
               </div>
             </div>
             <div className="flex justify-between gap-4 md:justify-end">
-              <Link href={`/elections/${election.year}/candidates`}>
+              <Link href={`/elections/${election.title}/candidates`}>
                 <Button variant="tonal">{t("more")}</Button>
               </Link>
-              <Button>{t("elections:try-simulation")}</Button>
+              {today < electionDate ? (
+                <Link href={`/elections/${election.title}/simulation`}>
+                  <Button>{t("elections:try-simulation")}</Button>
+                </Link>
+              ) : (
+                <Link href={`/elections/${election.title}/results`}>
+                  <Button>Lihat hasil</Button>
+                </Link>
+              )}
             </div>
           </Card>
           <Card>
@@ -232,7 +282,9 @@ const Home = ({
               bagaimana cara memilih nanti.
             </p>
             <div className="flex justify-end gap-4">
-              <Button>{t("elections:try-simulation")}</Button>
+              <Link href={`/elections/${election.title}/simulation`}>
+                <Button>{t("elections:try-simulation")}</Button>
+              </Link>
             </div>
           </Card>
           <Card>

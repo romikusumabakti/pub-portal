@@ -20,7 +20,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title,
     },
   }));
   return {
@@ -30,12 +30,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const { title } = context.params as IParams;
   const candidates = await prisma.electionCandidate.findMany({
     where: {
       election: {
         is: {
-          year: parseInt(year),
+          title,
         },
       },
     },
@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       number: "asc",
     },
   });
-  return { props: { year: parseInt(year), candidates }, revalidate: 60 };
+  return { props: { title, candidates }, revalidate: 60 };
 };
 
 function Confirm({ color, show, title, description, onOK, onCancel }: any) {
@@ -112,10 +112,10 @@ const Candidates = ({
 
   return ballot ? (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-4 lg:gap-6 md:flex-row justify-center">
+      <div className="flex flex-col [&>*]:flex-1 px-32 gap-16 lg:gap-32 md:flex-row justify-center">
         {candidates.map((candidate) => (
           <CandidateBallot
-            key={candidate.id}
+            key={candidate.number}
             candidate={candidate}
             onClick={() => {
               setCandidate(candidate);
@@ -126,7 +126,7 @@ const Candidates = ({
       <Confirm
         color={candidate?.color}
         show={candidate !== undefined}
-        title={`Pilih 0${candidate?.number} ${candidate?.name}`}
+        title={`Pilih 0${candidate?.number} ${candidate?.nickname}`}
         description={`Apakah Anda yakin ingin memilih 0${candidate?.number} ${candidate?.student.person.name} sebagai ketua PUB berikutnya?`}
         onOK={() => {
           if (token === "abcd1234") {
@@ -142,7 +142,7 @@ const Candidates = ({
               },
               body: JSON.stringify({
                 token,
-                candidateId: candidate?.id,
+                number: candidate?.number,
               }),
             })
               .then((response) => response.json())
@@ -183,7 +183,7 @@ const Candidates = ({
                 electionId: 4,
                 token: "abcd1234",
                 strength: 1,
-                candidateId: null,
+                number: null,
                 counted: true,
               });
             } else {
@@ -199,7 +199,7 @@ const Candidates = ({
                 .then((response) => response.json())
                 .then((ballot) => {
                   if (ballot) {
-                    if (ballot.candidateId) {
+                    if (ballot.number) {
                       alert("Token sudah digunakan.");
                     } else {
                       setBallot(ballot);

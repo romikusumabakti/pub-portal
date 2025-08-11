@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title,
     },
   }));
   return {
@@ -19,33 +19,33 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const { title } = context.params as IParams;
   const candidates = await prisma.electionCandidate.findMany({
     where: {
       election: {
         is: {
-          year: parseInt(year),
+          title,
         },
       },
     },
     orderBy: { number: "asc" },
   });
-  return { props: { year: parseInt(year), candidates }, revalidate: 60 };
+  return { props: { title, candidates }, revalidate: 60 };
 };
 
 const Candidates = ({
-  year,
+  title,
   candidates,
 }: {
-  year: number;
+  title: string;
   candidates: ElectionCandidate[];
 }) => {
   return (
-    <ElectionLayout year={year} page={pages.candidates}>
+    <ElectionLayout title={title} page={pages.candidates}>
       <div className="flex flex-col gap-4 lg:gap-6 md:flex-row">
         {candidates?.map((candidate) => (
           <CandidateCard
-            key={candidate.id}
+            key={candidate.number}
             candidate={candidate}
             buttons={true}
           />

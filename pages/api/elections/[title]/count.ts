@@ -6,10 +6,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { year } = req.query;
+    const { title } = req.query;
     const ballot = await prisma.electionBallot.findFirst({
       where: {
-        election: { year: parseInt(year as string) },
+        election: { title: title as string },
         counted: false,
       },
     });
@@ -24,10 +24,13 @@ export default async function handler(
         },
       });
 
-      if (ballot.candidateId) {
+      if (ballot.number) {
         const candidate = await prisma.electionCandidate.update({
           where: {
-            id: ballot.candidateId,
+            electionId_number: {
+              electionId: ballot.electionId,
+              number: ballot.number,
+            },
           },
           data: {
             votes: { increment: ballot.strength },

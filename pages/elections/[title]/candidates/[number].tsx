@@ -15,7 +15,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   const paths = candidates.map((candidate) => ({
     params: {
-      year: candidate.election.year.toString(),
+      title: candidate.election.title,
       number: candidate.number.toString(),
     },
   }));
@@ -26,18 +26,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 interface IParams extends ParsedUrlQuery {
-  year: string;
+  title: string;
   number: string;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year, number } = context.params as IParams;
+  const { title, number } = context.params as IParams;
   const candidate = await prisma.electionCandidate.findFirst({
     where: {
       election: {
-        is: {
-          year: parseInt(year),
-        },
+        title,
       },
       number: parseInt(number),
     },
@@ -49,14 +47,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
     },
   });
-  return { props: { year: parseInt(year), candidate }, revalidate: 60 };
+  return { props: { title: title, candidate }, revalidate: 60 };
 };
 
 const CandidateCard = ({
-  year,
+  title,
   candidate,
 }: {
-  year: number;
+  title: string;
   candidate: ElectionCandidate & {
     student: Student & {
       person: Person;
@@ -66,7 +64,7 @@ const CandidateCard = ({
   const { t } = useTranslation("common");
 
   return (
-    <ElectionLayout year={year} page={pages.candidates}>
+    <ElectionLayout title={title} page={pages.candidates}>
       <MaterialThemed color={candidate.color}>
         <div className="flex flex-1 gap-4 p-4 md:px-8 md:py-6 md:gap-8 rounded-3xl bg-surface1 text-primary">
           <CandidatePhoto
@@ -77,7 +75,7 @@ const CandidateCard = ({
           <div className="flex flex-col flex-1 gap-4">
             <div className="flex items-center flex-1 gap-4 text-3xl font-bold display">
               {/* <Image
-                src="/images/generation-icons/20.svg"
+                src="/images/batch-icons/20.svg"
                 alt="PUB 20 Integer icon"
                 width={24}
                 height={24}

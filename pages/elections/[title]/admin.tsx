@@ -10,7 +10,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title,
     },
   }));
   return {
@@ -20,35 +20,35 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
-  return { props: { year: parseInt(year) }, revalidate: 60 };
+  const { title } = context.params as IParams;
+  return { props: { title }, revalidate: 60 };
 };
 
-const Result = ({ year }: { year: number }) => {
+const Result = ({ title }: { title: string }) => {
   const [candidates, setCandidates] = useState<ElectionCandidate[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch(`/api/elections/${year}/count`, {
+      fetch(`/api/elections/${title}/count`, {
         method: "POST",
       })
         .then((response) => response.json())
         .then((candidate) => console.log(candidate));
 
-      fetch(`/api/elections/${year}/candidates`)
+      fetch(`/api/elections/${title}/candidates`)
         .then((response) => response.json())
         .then((candidates) => setCandidates(candidates));
     }, 5000);
     return () => clearInterval(interval);
-  }, [year]);
+  }, [title]);
 
   return (
-    <ElectionLayout year={year} page={pages.result}>
+    <ElectionLayout title={title} page={pages.result}>
       <ResponsiveContainer width="100%" height={256}>
         <PieChart width={256} height={256}>
           <Pie
             data={candidates.map((candidate) => ({
-              name: `0${candidate.number} ${candidate.name} (${candidate.votes} suara)`,
+              name: `0${candidate.number} ${candidate.nickname} (${candidate.votes} suara)`,
               value: candidate.votes,
             }))}
             outerRadius={65}
@@ -67,7 +67,7 @@ const Result = ({ year }: { year: number }) => {
             {candidates.map((candidate) => (
               <td
                 key={candidate.number}
-              >{`0${candidate.number} ${candidate.name} (${candidate.votes} suara)`}</td>
+              >{`0${candidate.number} ${candidate.nickname} (${candidate.votes} suara)`}</td>
             ))}
           </tr>
         </thead>

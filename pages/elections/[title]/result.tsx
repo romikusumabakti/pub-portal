@@ -11,7 +11,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title,
     },
   }));
   return {
@@ -21,12 +21,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const { title } = context.params as IParams;
   const ballotsWithToken = await prisma.electionBallot.findMany({
     where: {
       election: {
         is: {
-          year: parseInt(year),
+          title,
         },
       },
       counted: true,
@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       candidate: {
         select: {
           number: true,
-          name: true,
+          nickname: true,
         },
       },
     },
@@ -44,37 +44,37 @@ export const getStaticProps: GetStaticProps = async (context) => {
     ...ballot,
     token: `${ballot.token.slice(0, 2)}****${ballot.token.slice(-2)}`,
   }));
-  return { props: { year: parseInt(year), ballots }, revalidate: 60 };
+  return { props: { title, ballots }, revalidate: 60 };
 };
 
 const fetcher: Fetcher<ElectionCandidate[], string> = (...args) =>
   fetch(...args).then((res) => res.json());
 
 const Result = ({
-  year,
+  title,
   ballots,
 }: {
-  year: number;
+  title: string;
   ballots: (ElectionBallot & {
     candidate: {
       number: number;
-      name: string;
+      nickname: string;
     } | null;
   })[];
 }) => {
   const { data } = useSWR<ElectionCandidate[]>(
-    `/api/elections/${year}/candidates`,
+    `/api/elections/${title}/candidates`,
     fetcher,
     { refreshInterval: 5000, fallbackData: [] }
   );
 
   return (
-    <ElectionLayout year={year} page={pages.result}>
+    <ElectionLayout title={title} page={pages.result}>
       <ResponsiveContainer width="100%" height={256}>
         <PieChart width={256} height={256}>
           <Pie
             data={data!.map((candidate) => ({
-              name: `0${candidate.number} ${candidate.name} (${candidate.votes} suara)`,
+              name: `0${candidate.number} ${candidate.nickname} (${candidate.votes} suara)`,
               value: candidate.votes,
             }))}
             outerRadius={65}
@@ -93,7 +93,7 @@ const Result = ({
             {data!.map((candidate) => (
               <th
                 key={candidate.number}
-              >{`0${candidate.number} ${candidate.name} (${candidate.votes} suara)`}</th>
+              >{`0${candidate.number} ${candidate.nickname} (${candidate.votes} suara)`}</th>
             ))}
           </tr>
         </thead>
@@ -115,7 +115,7 @@ const Result = ({
                 </td>
                 <td>
                   {ballot.candidate
-                    ? `0${ballot.candidate.number} ${ballot.candidate.name}`
+                    ? `0${ballot.candidate.number} ${ballot.candidate.nickname}`
                     : "(rusak)"}
                 </td>
               </tr>

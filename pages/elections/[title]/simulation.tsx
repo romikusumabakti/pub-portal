@@ -9,18 +9,25 @@ import {
 import prisma from "../../../lib/prisma";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useRef, useState } from "react";
 import Button from "../../../components/button";
 import Scrim from "../../../components/scrim";
 import { IParams } from ".";
 import MaterialThemed from "../../../components/material-themed";
 import Card from "../../../components/card";
+import dynamic from "next/dynamic";
+import Ballot from "../../../components/elections/ballot";
+
+const OutlinedTextField = dynamic(
+  () => import("@w3h/react-material").then((mod) => mod.OutlinedTextField),
+  { ssr: false }
+);
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title.toString(),
     },
   }));
   return {
@@ -30,12 +37,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const { title } = context.params as IParams;
   const candidates = await prisma.electionCandidate.findMany({
     where: {
       election: {
         is: {
-          year: parseInt(year),
+          title,
         },
       },
     },
@@ -50,7 +57,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       number: "asc",
     },
   });
-  return { props: { year: parseInt(year), candidates }, revalidate: 60 };
+  return { props: { title, candidates }, revalidate: 60 };
 };
 
 function Confirm({ color, show, title, description, onOK, onCancel }: any) {
@@ -89,11 +96,11 @@ function Confirm({ color, show, title, description, onOK, onCancel }: any) {
   );
 }
 
-const Candidates = ({
-  year,
+const Simulation = ({
+  title,
   candidates,
 }: {
-  year: number;
+  title: string;
   candidates: (ElectionCandidate & {
     student: Student & {
       person: Person;
@@ -110,14 +117,16 @@ const Candidates = ({
     }
   >();
 
+  const dummyToken = useRef(Math.random().toString(16).slice(2, 10));
+
   return (
-    <ElectionLayout year={year} page={pages.simulation}>
+    <ElectionLayout title={title} page={pages.simulation}>
       {ballot ? (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4 lg:gap-6 md:flex-row justify-center">
             {candidates.map((candidate) => (
               <CandidateBallot
-                key={candidate.id}
+                key={candidate.number}
                 candidate={candidate}
                 onClick={() => {
                   setCandidate(candidate);
@@ -128,7 +137,7 @@ const Candidates = ({
           <Confirm
             color={candidate?.color}
             show={candidate !== undefined}
-            title={`Pilih 0${candidate?.number} ${candidate?.name}`}
+            title={`Pilih 0${candidate?.number} ${candidate?.nickname}`}
             description={`Apakah Anda yakin ingin memilih 0${candidate?.number} ${candidate?.student.person.name} sebagai ketua PUB berikutnya?`}
             onOK={() => {
               setCandidate(undefined);
@@ -153,40 +162,52 @@ const Candidates = ({
           </Button>
         </div>
       ) : (
-        <Card className="m-auto">
-          <form
-            className="flex flex-col max-w-md gap-4 m-auto"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (token === "abcd1234") {
-                setBallot({
-                  id: 1,
-                  electionId: 4,
-                  token: "abcd1234",
-                  strength: 1,
-                  candidateId: null,
-                  counted: true,
-                });
-              } else {
-                alert("Token tidak valid.");
-              }
-            }}
-          >
-            <div>Token (abcd1234)</div>
-            <input
-              className="p-3 border"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              placeholder="Masukkan token di sini"
-              required
-              autoFocus
+        <div className="flex justify-evenly items-center">
+          <Card>
+            <Ballot
+              title={title}
+              candidates={candidates}
+              token={dummyToken.current}
+              className="w-96"
             />
-            <Button>Lakukan pemilihan (simulasi)</Button>
-          </form>
-        </Card>
+          </Card>
+          <Card>
+            <form
+              className="flex flex-col max-w-md gap-4 m-auto"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (token === dummyToken.current) {
+                  setBallot({
+                    id: 1,
+                    electionId: 4,
+                    token: dummyToken.current,
+                    strength: 1,
+                    number: null,
+                    counted: true,
+                  });
+                } else {
+                  alert("Token tidak valid.");
+                }
+              }}
+            >
+              <OutlinedTextField
+                label="Token"
+                value={token}
+                onChange={(e) =>
+                  setToken(
+                    (e as unknown as ChangeEvent<HTMLInputElement>).target.value
+                  )
+                }
+                required
+                error={false}
+              />
+              <Button>Lakukan pemilihan (simulasi)</Button>
+            </form>
+          </Card>
+        </div>
       )}
     </ElectionLayout>
   );
 };
 
-export default Candidates;
+export default Simulation;

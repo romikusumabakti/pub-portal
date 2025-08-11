@@ -11,7 +11,7 @@ export default async function handler(
         token: req.body.token,
       },
       data: {
-        candidateId: req.body.candidateId,
+        number: req.body.number,
       },
     });
     res.status(200).json(ballot);

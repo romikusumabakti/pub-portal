@@ -8,7 +8,7 @@ export default async function handler(
   if (req.method === "POST") {
     const election = await prisma.election.findFirst({
       where: {
-        year: 2023,
+        title: "2024",
       },
     });
 

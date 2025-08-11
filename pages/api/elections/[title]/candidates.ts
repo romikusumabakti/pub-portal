@@ -6,13 +6,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const { year } = req.query;
+    const { title } = req.query;
     const candidates = await prisma.electionCandidate.findMany({
       where: {
         election: {
-          is: {
-            year: parseInt(year as string),
-          },
+          title: title as string,
         },
       },
     });

@@ -14,18 +14,19 @@ const CandidatePhoto = ({
   themed?: boolean;
 }) => {
   const Component = () => (
-    <div className={`relative ${className}`} title={candidate.name!}>
+    <div className={`relative ${className}`} title={candidate.nickname!}>
       <div className="absolute z-10 flex items-center justify-center w-1/4 font-bold rounded-full h-1/4 display bg-primary text-on-primary">
         0{candidate.number}
       </div>
-      <Image
-        src={`/images/election-candidate-photos/${candidate.electionId}/${candidate.number}.png`}
-        alt={candidate.name!}
-        // layout="responsive"
-        width={size}
-        height={size}
-        className="rounded-full bg-secondary-container bg-[left_1rem_bottom_1rem] md:bg-[left_3rem_bottom_3rem] bg-no-repeat bg-[url('/images/pub-logo-animated-background.svg')] bg-blend-luminosity"
-      ></Image>
+      <div className="relative aspect-square">
+        <Image
+          src={`/images/election-candidate-photos/${candidate.electionId}/${candidate.number}.png`}
+          alt={candidate.nickname!}
+          fill
+          className="bg-secondary-container rounded-full bg-[url('https://portal.pubpasim.org/images/pub-logo-animated-background.svg')] bg-[left_1rem_bottom_1rem] bg-no-repeat object-top object-cover bg-blend-luminosity md:bg-[left_3rem_bottom_3rem]"
+          style={{ backgroundColor: `${candidate.color}33` }}
+        />
+      </div>
     </div>
   );
 

@@ -12,7 +12,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title,
     },
   }));
   return {
@@ -22,9 +22,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const { title } = context.params as IParams;
   const election = await prisma.election.findUnique({
-    where: { year: parseInt(year) },
+    where: { title },
   });
   const ballots = await prisma.electionBallot.findMany({
     where: {
@@ -40,17 +40,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   });
   return {
-    props: { year: parseInt(year), ballots, candidates },
+    props: { title, ballots, candidates },
     revalidate: 60,
   };
 };
 
 const Ballots = ({
-  year,
+  title,
   ballots,
   candidates,
 }: {
-  year: number;
+  title: number;
   ballots: ElectionBallot[];
   candidates: ElectionCandidate[];
 }) => {
@@ -63,24 +63,21 @@ const Ballots = ({
             (i + 1) % 4 === 0 && "break-after-page"
           }`}
         >
-          <div className="flex flex-col grow justify-center items-center gap-8">
+          <div className="flex flex-col grow justify-center items-center gap-8 w-full">
             <div className="flex items-center gap-2">
               <MdHowToVote size={48} className="text-primary" />
               <h1 className="text-2xl display">
-                <Trans
-                  i18nKey="elections:logo"
-                  components={[
-                    <span key={0} className="font-bold text-primary" />,
-                    <span key={1} />,
-                  ]}
-                />{" "}
-                <span>{year}</span>
+                <span key={1}>Pemilu</span>{" "}
+                <span key={0} className="font-bold text-primary">
+                  PUB
+                </span>{" "}
+                <span>{title}</span>
               </h1>
             </div>
-            <div className="flex gap-4">
+            <div className="flex w-full gap-4 [&>*]:flex-1">
               {candidates.map((candidate) => (
                 <CandidateCard
-                  key={candidate.id}
+                  key={candidate.number}
                   candidate={candidate}
                   print={true}
                 />

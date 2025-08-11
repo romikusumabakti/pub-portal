@@ -1,4 +1,4 @@
-import { ElectionVoter, Generation, Person, Student } from "@prisma/client";
+import { ElectionVoter, Batch, Person, Student } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Card from "../../../components/card";
 import ElectionLayout, { pages } from "../../../components/elections/layout";
@@ -9,7 +9,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const elections = await prisma.election.findMany();
   const paths = elections.map((election) => ({
     params: {
-      year: election.year.toString(),
+      title: election.title,
     },
   }));
   return {
@@ -19,12 +19,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { year } = context.params as IParams;
+  const { title } = context.params as IParams;
   const voters = await prisma.electionVoter.findMany({
     where: {
       election: {
         is: {
-          year: parseInt(year),
+          title,
         },
       },
     },
@@ -33,33 +33,34 @@ export const getStaticProps: GetStaticProps = async (context) => {
         include: {
           student: {
             include: {
-              generation: true,
+              batch: true,
             },
           },
         },
       },
     },
+    orderBy: { personId: "asc" },
   });
-  return { props: { year: parseInt(year), voters }, revalidate: 60 };
+  return { props: { title, voters }, revalidate: 60 };
 };
 
 const Voters = ({
-  year,
+  title,
   voters,
 }: {
-  year: number;
+  title: string;
   voters: (ElectionVoter & {
     person: Person & {
       student:
         | (Student & {
-            generation: Generation;
+            batch: Batch;
           })
         | null;
     };
   })[];
 }) => {
   return (
-    <ElectionLayout year={year} page={pages.voters}>
+    <ElectionLayout title={title} page={pages.voters}>
       <Card>
         <h1 className="text-3xl display">Daftar pemilih tetap</h1>
         <table>
@@ -71,11 +72,11 @@ const Voters = ({
           </thead>
           <tbody>
             {voters.map((voter) => (
-              <tr key={voter.id}>
+              <tr key={voter.personId}>
                 <td>{voter.person.name}</td>
                 <td>
                   {voter.person.student &&
-                    `${voter.person.student.generation.number} (${voter.person.student.generation.name})`}
+                    `${voter.person.student.batch.number} (${voter.person.student.batch.name})`}
                 </td>
               </tr>
             ))}

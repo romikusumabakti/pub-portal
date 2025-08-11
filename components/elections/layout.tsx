@@ -53,11 +53,11 @@ export let pages: { [key: string]: Page } = {
 
 const ElectionLayout = ({
   children,
-  year,
+  title,
   page,
 }: {
   children: any;
-  year: number;
+  title: string;
   page: Page;
 }) => {
   const { data: session, status } = useSession();
@@ -75,10 +75,10 @@ const ElectionLayout = ({
 
   return (
     <Layout
-      app={{ ...apps.elections, title: `${apps.elections} ${year}` }}
+      app={{ ...apps.elections, title: `${apps.elections} ${title}` }}
       menu={Object.values(pages).map((page) => ({
         ...page,
-        path: `/${year}${page.path}`,
+        path: `/${title}${page.path}`,
       }))}
       page={page}
     >
